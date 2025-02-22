@@ -33,18 +33,9 @@ public class Album {
         return this.artist;
     }
 
-    public String getGenre() {
-        return this.genre;
-    }
-
-    public int getYear() {
-        return this.year;
-    }
-
     public List<Song> getSongs() {
         return Collections.unmodifiableList(songs); 
     }
-
     
     public String toString() {
         return title + "," + artist + "," + genre + "," + year;
