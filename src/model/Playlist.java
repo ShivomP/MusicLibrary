@@ -1,6 +1,8 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 // File: Playlist.java
 // Author: Shivom Paudel
@@ -11,25 +13,21 @@ public class Playlist {
 	private String name;
 	private ArrayList<Song> songs;
 	
-	public Playlist (String name, ArrayList<Song> songs) {
+	public Playlist (String name) {
 		this.name = name;
 		this.songs = new ArrayList<Song>();
 	}
 	
+	public List<Song> getSongs() {
+		return Collections.unmodifiableList(this.songs);
+	}
+	
 	public void addSong(Song song) {
-		if (songs.contains(song)) {
-			System.out.println("This song is already in this playlist");
-		} else {
-			songs.add(song);
-		}
+		songs.add(song);
 	}
 	
 	public void removeSong(Song song) {
-		if (!songs.contains(song)) {
-			System.out.println("This song does not exist in this playlist");
-		} else {
-			songs.remove(song);
-		}
+		songs.remove(song);
 	}
 	
 	public String getPlaylistName() {

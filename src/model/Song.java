@@ -20,6 +20,14 @@ public class Song {
 		this.favorite = false;
 	}
 	
+	public Song(Song song) {
+		this.title = song.title;
+		this.artist = song.artist;
+		this.album = song.album;
+		this.rating = song.rating;
+		this.favorite = song.favorite;
+	}
+
 	public void rate(String userRate) {
 		switch (userRate) {
 			case "1":
@@ -37,11 +45,7 @@ public class Song {
 	}
 	
 	public void favoriteSong() {
-		if (this.favorite) {
-			System.out.println("This song is already favorited.");
-		} else {
-			this.favorite = true;
-		}
+		this.favorite = true;
 	}
 	
 	public String getTitle() {
@@ -57,7 +61,7 @@ public class Song {
 	}
 	
 	public String getAlbum() {
-		return this.getAlbum();
+		return this.album;
 	}
 	
 	public String toString() {

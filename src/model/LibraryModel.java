@@ -1,5 +1,249 @@
 package model;
 
-public class LibraryModel {
+import java.util.ArrayList;
+import java.util.List;
 
+// File: LibraryModel.java
+// Author: Shivom Paudel
+// Purpose: The purpose of this file is to define the Library Model which
+// represents a single users music library. This will essentially be the
+// backend that allows to user to modify their music library.
+
+public class LibraryModel {
+	private List<Album> allAlbums;
+	private List<Song> allSongs;
+	private ArrayList<Playlist> playlists;
+	private ArrayList<Song> mySongs;
+	private ArrayList<Album> myAlbums;
+	
+	public LibraryModel() {
+		MusicStore store = new MusicStore();
+		this.allAlbums = store.getAlbumsList();
+		this.allSongs = store.getSongsList();
+		this.playlists = new ArrayList<Playlist>();
+		this.mySongs = new ArrayList<Song>();
+		this.myAlbums = new ArrayList<Album>();
+	}
+	
+	public Song songByTitle(String songName) {
+		for (int i = 0; i < allSongs.size(); i++) {
+			if (allSongs.get(i).getTitle() == songName) {
+				return new Song(allSongs.get(i));
+			}
+		}
+		
+		return null;
+	}
+	
+	public ArrayList<Song> songByArtist(String artist) {
+		ArrayList<Song> artistSongs = new ArrayList<Song>();
+		
+		for (int i = 0; i < allSongs.size(); i++) {
+			if (allSongs.get(i).getArtist() == artist) {
+				artistSongs.add(new Song(allSongs.get(i)));
+			}
+		}
+		
+		return artistSongs;
+	}
+	
+	public Album albumByTitle(String albumName) {
+		for (int i = 0; i < allAlbums.size(); i++) {
+			if (allAlbums.get(i).getTitle() == albumName) {
+				return new Album(allAlbums.get(i));
+			}
+		}
+		
+		return null;
+	}
+	
+	public ArrayList<Album> albumByArtist(String artist) {
+		ArrayList<Album> artistAlbums = new ArrayList<Album>();
+		
+		for (int i = 0; i < allAlbums.size(); i++) {
+			if (allAlbums.get(i).getArtist() == artist) {
+				artistAlbums.add(new Album(allAlbums.get(i)));
+			}
+		}
+		
+		return artistAlbums;
+	}
+	
+	public Song mySongByTitle(String songName) {
+		for (int i = 0; i < mySongs.size(); i++) {
+			if (mySongs.get(i).getTitle() == songName) {
+				return new Song(mySongs.get(i));
+			}
+		}
+		
+		return null;
+	}
+	
+	public ArrayList<Song> mySongByArtist(String artist) {
+		ArrayList<Song> artistSongs = new ArrayList<Song>();
+		
+		for (int i = 0; i < mySongs.size(); i++) {
+			if (mySongs.get(i).getArtist() == artist) {
+				artistSongs.add(new Song(mySongs.get(i)));
+			}
+		}
+		
+		return artistSongs;
+	}
+	
+	public Album myAlbumByTitle(String albumName) {
+		for (int i = 0; i < myAlbums.size(); i++) {
+			if (myAlbums.get(i).getTitle() == albumName) {
+				return new Album(myAlbums.get(i));
+			}
+		}
+		
+		return null;
+	}
+	
+	public ArrayList<Album> myAlbumByArtist(String artist) {
+		ArrayList<Album> artistAlbums = new ArrayList<Album>();
+		
+		for (int i = 0; i < myAlbums.size(); i++) {
+			if (myAlbums.get(i).getArtist() == artist) {
+				artistAlbums.add(new Album(myAlbums.get(i)));
+			}
+		}
+		
+		return artistAlbums;
+	}
+	
+	public Playlist searchPlaylists(String playlistName) {
+		for (int i = 0; i < this.playlists.size(); i++) {
+			if (this.playlists.get(i).getPlaylistName() == playlistName) {
+				return this.playlists.get(i);
+			}
+		}
+		
+		return null;
+	}
+	
+	public boolean addSong(String song) {
+		for (int i = 0; i < this.allSongs.size(); i++) {
+			if (song == this.allSongs.get(i).getTitle()) {
+				mySongs.add(new Song(this.allSongs.get(i)));
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	public boolean addAlbum(String album) {
+		for (int i = 0; i < this.allAlbums.size(); i++) {
+			if (album == this.allAlbums.get(i).getTitle()) {
+				myAlbums.add(new Album(this.allAlbums.get(i)));
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	public ArrayList<String> getSongTitles(){
+		ArrayList<String> songs = new ArrayList<String>();
+		for (int i = 0; i < this.mySongs.size(); i++) {
+			songs.add(this.mySongs.get(i).getTitle());
+		}
+		
+		return songs;
+	}
+	
+	public ArrayList<String> getArtist(){
+		ArrayList<String> artist = new ArrayList<String>();
+		for (int i = 0; i < this.myAlbums.size(); i++) {
+			if(!artist.contains(this.myAlbums.get(i).getArtist())) {
+				artist.add(this.myAlbums.get(i).getArtist());
+			}
+		}
+		
+		return artist;
+	}
+	
+	public ArrayList<String> getAlbums(){
+		ArrayList<String> albums = new ArrayList<String>();
+		for (int i = 0; i < this.myAlbums.size(); i++) {
+			albums.add(this.myAlbums.get(i).getTitle());
+		}
+		
+		return albums;
+	}
+	
+	public ArrayList<String> getPlaylists() {
+		ArrayList<String> playlistNames = new ArrayList<String>();
+		for (int i = 0; i < this.playlists.size(); i++) {
+			playlistNames.add(this.playlists.get(i).getPlaylistName());
+		}
+		
+		return playlistNames;
+	}
+	
+	public ArrayList<String> getFavoriteSongs(){
+		ArrayList<String> songs = new ArrayList<String>();
+		for (int i = 0; i < this.mySongs.size(); i++) {
+			if(this.mySongs.get(i).getFavorite()) {
+				songs.add(this.mySongs.get(i).getTitle());
+			}
+		}
+		
+		return songs;
+	}
+	
+	public boolean createPlaylist(String name) {
+		for (int i = 0; i < this.playlists.size(); i++) {
+			if (this.playlists.get(i).getPlaylistName() == name) {
+				return false;
+			}
+		}
+		Playlist playlist = new Playlist(name);
+		playlists.add(playlist);
+		return true;
+	}
+	
+	public boolean addSongToPlaylist(String playlistName, String songName) {
+		Playlist playlist = searchPlaylists(playlistName);
+		Song song = songByTitle(songName);
+		if (playlist != null && song != null) {
+			playlist.addSong(song);
+			return true;
+		}
+		
+		return false;
+	}
+	
+	public boolean removeSongFromPlaylist(String playlistName, String songName) {
+		Playlist playlist = searchPlaylists(playlistName);
+		Song song = mySongByTitle(songName);
+		if (playlist != null && playlist.getSongs().contains(song)) {
+			playlist.removeSong(song);
+			return true;
+		}
+		
+		return false;
+	}
+	
+	public boolean markSongFavorite(String songName) {
+		Song song = mySongByTitle(songName);
+		if (song != null) {
+			song.favoriteSong();
+			return true;
+		}
+		
+		return false;
+	}
+	
+	public boolean rateSong(String songName, String rating) {
+		Song song = mySongByTitle(songName);
+		if (song != null) {
+			song.rate(rating);
+			return true;
+		}
+		
+		return false;
+	}
 }

@@ -25,6 +25,14 @@ public class Album {
         this.songs = new ArrayList<>();
     }
 	
+	public Album(Album album) {
+		this.title = album.title;
+		this.artist = album.artist;
+		this.genre = album.genre;
+		this.year = album.year;
+		this.songs = album.songs;
+	}
+
 	public void addSong(Song song) {
 		this.songs.add(song);
 	}
