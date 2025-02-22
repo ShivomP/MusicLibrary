@@ -14,16 +14,20 @@ public class Album {
 	private String title;
 	private String artist;
 	private String genre;
-	private int year;
+	private String year;
 	private ArrayList<Song> songs;
 	
-	public Album(String title, String artist, String genre, int year, List<Song> songs) {
+	public Album(String title, String artist, String genre, String year) {
         this.title = title;
         this.artist = artist;
         this.genre = genre;
         this.year = year;
-        this.songs = new ArrayList<>(songs);
+        this.songs = new ArrayList<>();
     }
+	
+	public void addSong(Song song) {
+		this.songs.add(song);
+	}
 	
 	public String getTitle() {
         return this.title;
@@ -33,18 +37,9 @@ public class Album {
         return this.artist;
     }
 
-    public String getGenre() {
-        return this.genre;
-    }
-
-    public int getYear() {
-        return this.year;
-    }
-
     public List<Song> getSongs() {
         return Collections.unmodifiableList(songs); 
     }
-
     
     public String toString() {
         return title + "," + artist + "," + genre + "," + year;

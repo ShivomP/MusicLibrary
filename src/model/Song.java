@@ -48,6 +48,18 @@ public class Song {
 		return this.title;
 	}
 	
+	public String getArtist() {
+		return this.artist;
+	}
+	
+	public boolean getFavorite() {
+		return this.favorite;
+	}
+	
+	public String getAlbum() {
+		return this.getAlbum();
+	}
+	
 	public String toString() {
 		return this.title + " " + this.artist + " " + this.album;
 	}
