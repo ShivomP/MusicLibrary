@@ -32,15 +32,20 @@ public class Song {
 		switch (userRate) {
 			case "1":
 				this.rating = Rating.ONE;
+				break;
 			case "2":
 				this.rating = Rating.TWO;
+				break;
 			case "3":
 				this.rating = Rating.THREE;
+				break;
 			case "4":
 				this.rating = Rating.FOUR;
+				break;
 			case "5":
 				this.rating = Rating.FIVE;
 				favorite = true;
+				break;
 		}
 	}
 	
@@ -62,6 +67,10 @@ public class Song {
 	
 	public String getAlbum() {
 		return this.album;
+	}
+	
+	public Rating getRating() {
+		return this.rating;
 	}
 	
 	public String toString() {
