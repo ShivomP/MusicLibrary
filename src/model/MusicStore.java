@@ -18,22 +18,19 @@ public class MusicStore {
 	private ArrayList <Song> songs;
 	
 	public MusicStore() {
-		this.albumFileNames = new ArrayList<String>();
-		this.albums = new ArrayList<Album>();
-		this.songs = new ArrayList<Song>();
 		getAlbumFileNames();
 		createAlbums();
 		createSongsList();
 	}
 	
-	private void getAlbumFileNames() { 
-		try (BufferedReader reader = new BufferedReader(new FileReader("src/model/albums.txt"))) {
+	private void getAlbumFileNames() {
+		try (BufferedReader reader = new BufferedReader(new FileReader("albums.txt"))) {
 			String line;
 			while ((line = reader.readLine()) != null) {
 				String[] parts = line.split(",");
 				String albumTitle = parts[0].trim();
 				String artist = parts[1].trim();
-				albumFileNames.add("src/model/" + albumTitle + "_" + artist + ".txt");
+				albumFileNames.add(albumTitle + "_" + artist + ".txt");
 				
 			} 
 		} catch (Exception e) {
@@ -42,7 +39,7 @@ public class MusicStore {
 	}
 	
 	private void createAlbums() {
-		
+		this.albums = new ArrayList<Album>();
 		
 		for (int i = 0; i < albumFileNames.size(); i++) {
 			
@@ -73,6 +70,7 @@ public class MusicStore {
 	}
 	
 	private void createSongsList() {
+		this.songs = new ArrayList<Song>();
 		
 		for (int i = 0; i < albums.size(); i++) {
 			
