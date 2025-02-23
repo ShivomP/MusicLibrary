@@ -22,6 +22,15 @@ public class Playlist {
 		return Collections.unmodifiableList(this.songs);
 	}
 	
+	public ArrayList<String> getSongNames() {
+		ArrayList<String> songNames = new ArrayList<String>();
+		for (int i = 0; i < this.songs.size(); i++) {
+			songNames.add(this.songs.get(i).getTitle()); 
+		}
+		
+		return songNames;
+	}
+	
 	public void addSong(Song song) {
 		songs.add(song);
 	}

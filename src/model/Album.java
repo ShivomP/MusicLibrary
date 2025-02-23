@@ -22,7 +22,7 @@ public class Album {
         this.artist = artist;
         this.genre = genre;
         this.year = year;
-        this.songs = new ArrayList<>();
+        this.songs = new ArrayList<Song>();
     }
 	
 	public Album(Album album) {
