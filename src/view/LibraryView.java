@@ -6,8 +6,8 @@ import java.util.Scanner;
 import model.*;
 
 //File: LibraryView.java
-//Author: Viswa Sushanth Karuturi
-//Purpose: 
+//Author: Viswa Sushanth Karuturi && Shivom Paudel
+//Purpose: The purpose of this file is to define the View of this project.
 
 
 public class LibraryView {
@@ -20,29 +20,29 @@ public class LibraryView {
 	}
 	
 	public void menuView() {
-		System.out.println("\nWelcome to the Music Library");
+		System.out.println("Welcome to the Music Library");
 		System.out.println("Menu:");
-		System.out.println("1. Search for a song by title type: '1 song name'");
-		System.out.println("2. Search for a song by artist type: '2 artist name'");
-		System.out.println("3. Search for an album by title type: '3 song name'");
-		System.out.println("4. Search for an album by artist type: '4 artist name'");
-		System.out.println("5. Search for a song by title in your library type: '5 song name'");
-		System.out.println("6. Search for a song by arist in your library type: '6 artist name'");
-		System.out.println("7. Search for an album by title in your library type: '7 song name'");
-		System.out.println("8. Search for an album by arist in your library type: '8 artist name'");
-		System.out.println("9. Search for a playlist by name in your library type: '9 playlist name'");
-		System.out.println("10. Add a song to the library type: '10 song name'");
-		System.out.println("11. Add an album to the library type: '11 album name'");
+		System.out.println("1. Search for a song by title type: '1'");
+		System.out.println("2. Search for a song by artist type: '2'");
+		System.out.println("3. Search for an album by title type: '3'");
+		System.out.println("4. Search for an album by artist type: '4'");
+		System.out.println("5. Search for a song by title in your library type: '5'");
+		System.out.println("6. Search for a song by arist in your library type: '6'");
+		System.out.println("7. Search for an album by title in your library type: '7'");
+		System.out.println("8. Search for an album by arist in your library type: '8'");
+		System.out.println("9. Search for a playlist by name in your library type: '9'");
+		System.out.println("10. Add a song to the library type: '10'");
+		System.out.println("11. Add an album to the library type: '11'");
 		System.out.println("12. List of all songs in your library type: '12'");
 		System.out.println("13. List of all artists in your library type: '13'");
 		System.out.println("14. List of all albums in your library type: '14'");
 		System.out.println("15. List of all playlists in your library type: '15'");
 		System.out.println("16. List of all favorite songs in your library type: '16'");
-		System.out.println("17. Create a playlist in your library type: '17 playlist name'");
-		System.out.println("18. Add a song to your playlist type: '18 playlist name song name'");
-		System.out.println("19. Remove a song from your playlist type: '19 playlist name song name'");
-		System.out.println("20. Mark a song as favorite in your library type: '20 song name'");
-		System.out.println("21. Rate a song in your library type: '21 song name rating(1-5)'");
+		System.out.println("17. Create a playlist in your library type: '17'");
+		System.out.println("18. Add a song to your playlist type: '18'");
+		System.out.println("19. Remove a song from your playlist type: '19'");
+		System.out.println("20. Mark a song as favorite in your library type: '20'");
+		System.out.println("21. Rate a song in your library type: '21'");
 		System.out.println("22. EXIT type: '22'");		
 	}
 	
@@ -67,7 +67,7 @@ public class LibraryView {
                 System.out.println(song.toString());
             }
         } else {
-            System.out.println("Songs not found in the music store");
+            System.out.println("Artist not found in the music store");
         }
     }
 	
@@ -93,7 +93,7 @@ public class LibraryView {
                 album.printSongs();
             }
         } else {
-            System.out.println("Albums not found in the music store");
+            System.out.println("Artist not found in the music store");
         }
     }
 	
@@ -117,7 +117,7 @@ public class LibraryView {
                 System.out.println(song.toString());
             }
         } else {
-            System.out.println("Songs not found in the library");
+            System.out.println("Artist not found in the library");
         }
     }
 	
@@ -143,7 +143,7 @@ public class LibraryView {
                 album.printSongs();
             }
         } else {
-            System.out.println("Albums not found in the library");
+            System.out.println("Artist not found in the library");
         }
     }
 	
@@ -262,12 +262,17 @@ public class LibraryView {
 		String songTitle = scanner.nextLine().trim().toLowerCase();
 		
 		if (libraryModel.searchPlaylists(playlistName) != null) {
-			boolean songAdded = libraryModel.addSongToPlaylist(playlistName, songTitle);
-	        if (songAdded) {
-	            System.out.println("Song added to playlist");
-	        } else {
-	            System.out.println("Could not add song to playlist. Song does not exist in music store");
-	        }
+			if(!libraryModel.searchPlaylists(playlistName).getSongNames().contains(songTitle)) {
+				boolean songAdded = libraryModel.addSongToPlaylist(playlistName, songTitle);
+				if (songAdded) {
+					System.out.println("Song added to playlist");
+				} else {
+					System.out.println("Could not add song to playlist. Song does not exist in music store");
+				}
+				
+			} else {
+				System.out.println("This song is already in your playlist");
+			}
 		} else {
 			System.out.println("Playlist does not exist");
 		}    
@@ -282,7 +287,7 @@ public class LibraryView {
         if (songRemoved) {
             System.out.println("Song removed from playlist");
         } else {
-            System.out.println("Could not remove song from playlist. Check whether playlist and song exist in your library");
+            System.out.println("Could not remove song from playlist. Check if playlist and song both exist in your library");
         }
     }
 
@@ -303,15 +308,99 @@ public class LibraryView {
         String songTitle = scanner.nextLine().trim().toLowerCase();
         System.out.println("Enter the rating (1-5): ");
         String songRating = scanner.nextLine().trim().toLowerCase();
-        boolean songRated = libraryModel.rateSong(songTitle, songRating);
-        if (songRated) {
-            System.out.println("Song rated");
+        if (Integer.parseInt(songRating) < 1 || Integer.parseInt(songRating) > 5) {
+        	System.out.println("Enter a valid rating (1-5");
         } else {
-            System.out.println("Song not found in your library.");
+        	boolean songRated = libraryModel.rateSong(songTitle, songRating);
+        	if (songRated) {
+        		System.out.println("Song rated");
+        	} else {
+        		System.out.println("Song not found in your library.");
+        	}
         }
     }
 	
-	public static void main(String[] args) {
+	private void run() {
+		boolean running = true;
+		while(running) {
+			menuView();
+			System.out.println("Enter your choice! ");
+			String input = scanner.nextLine();
+			
+			switch(input.trim()) {
+				case "1":
+					searchStoreSongByTitle();
+					break;
+				case "2":
+					searchStoreSongByArtist();
+					break;
+				case "3":
+					searchStoreAlbumByTitle();
+					break;
+				case "4":
+					searchStoreAlbumByArtist();
+					break;
+				case "5":
+					searchLibrarySongByTitle();
+					break;
+				case "6":
+					searchLibrarySongByArtist();
+					break;
+				case "7":
+					searchLibraryAlbumByTitle();
+					break;
+				case "8":
+					searchLibraryAlbumByArtist();
+					break;
+				case "9":
+					searchLibraryPlaylistByName();
+					break;
+				case "10":
+					addSongToLibrary();
+					break;
+				case "11":
+					addAlbumToLibrary();
+					break;
+				case "12":
+					mySongs();
+					break;
+				case "13":
+					myArtists();
+					break;
+				case "14":
+					myAlbums();
+					break;
+				case "15":
+					myPlaylists();
+					break;
+				case "16":
+					myFavoriteSongs();
+					break;
+				case "17":
+					createMyPlaylist();
+					break;
+				case "18":
+					addSongsToPlaylist();
+					break;
+				case "19":
+					removeSongFromPlaylist();
+					break;
+				case "20":
+					markSongFavorite();
+					break;
+				case "21":
+					rateSong();
+					break;
+				case "22":
+					running = false;
+					break;
+				default:
+					System.out.println("Invalid input try again!");
+			}
+		}
+	}
+	
+	public void main() {
         LibraryModel libraryModel = new LibraryModel();
         LibraryView view = new LibraryView(libraryModel);
         view.run();   

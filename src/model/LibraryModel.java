@@ -44,7 +44,7 @@ public class LibraryModel {
 			}
 		}
 		
-		return artistSongs;
+		return artistSongs; 
 	}
 	
 	public Album albumByTitle(String albumName) {
@@ -230,7 +230,9 @@ public class LibraryModel {
 		Song song = songByTitle(songName);
 		if (playlist != null && song != null) {
 			playlist.addSong(song);
-			this.addSong(song.getTitle());
+			if(!this.getSongTitles().contains(song.getTitle())) {
+				this.addSong(song.getTitle());
+			}
 			return true;
 		}
 		

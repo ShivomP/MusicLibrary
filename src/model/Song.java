@@ -32,15 +32,19 @@ public class Song {
 		switch (userRate) {
 			case "1":
 				this.rating = Rating.ONE;
+				this.favorite = false;
 				break;
 			case "2":
 				this.rating = Rating.TWO;
+				this.favorite = false;
 				break;
 			case "3":
 				this.rating = Rating.THREE;
+				this.favorite = false;
 				break;
 			case "4":
 				this.rating = Rating.FOUR;
+				this.favorite = false;
 				break;
 			case "5":
 				this.rating = Rating.FIVE;

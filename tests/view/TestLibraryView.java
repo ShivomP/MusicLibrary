@@ -4,11 +4,14 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
+import model.*;
+
 class TestLibraryView {
-
+	LibraryModel libraryModel = new LibraryModel();
+	LibraryView libraryView = new LibraryView(libraryModel);
+	
 	@Test
-	void test() {
-		fail("Not yet implemented");
+	void testMain() {
+		libraryView.main();
 	}
-
 }
