@@ -22,10 +22,13 @@ public class Playlist {
 		return Collections.unmodifiableList(this.songs);
 	}
 	
-	public ArrayList<String> getSongNames() {
+	public ArrayList<String> getSongAndArtistNames() {
 		ArrayList<String> songNames = new ArrayList<String>();
 		for (int i = 0; i < this.songs.size(); i++) {
-			songNames.add(this.songs.get(i).getTitle().toLowerCase()); 
+			String songTitle = songs.get(i).getTitle().toLowerCase();
+			String artistName = songs.get(i).getArtist().toLowerCase();
+			
+			songNames.add(songTitle + " " + artistName); 
 		}
 		
 		return songNames;

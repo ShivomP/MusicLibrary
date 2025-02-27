@@ -62,9 +62,9 @@ class TestLibraryView {
     
     @Test
     void testAddAndSearchSongLibrary() {
-    	command = "10\n my heart is full\n "
-    			+ "10\n my heart is full\n "
-    			+ "10\n shivom\n "
+    	command = "10\n my heart is full\n norah jones\n "
+    			+ "10\n my heart is full\n norah jones\n "
+    			+ "10\n shivom\n norah jones\n "
     			+ "5\n my heart is full\n "
     			+ "5\n shivom\n "
     			+ "6\n Norah Jones\n "
@@ -104,15 +104,17 @@ class TestLibraryView {
     			+ "17\n another one\n"
     			+ "17\n shivom's music\n "
     			+ "17\n shivom's music\n "
-    			+ "18\n shiv\n tired\n "
-    			+ "18\n shivom's music\n dsjf\n "
-    			+ "18\n shivom's music\n tired\n "
-    			+ "18\n shivom's music\n tired\n "
-    			+ "18\n shivom's music\n cold shoulder\n "
+    			+ "18\n shiv\n tired\n adele\n "
+    			+ "18\n shivom's music\n dsjf\n  adele\n "
+    			+ "18\n shivom's music\n tired\n adele\n "
+    			+ "18\n shivom's music\n tired\n adele\n "
+    			+ "18\n shivom's music\n cold shoulder\n adele\n "
+    			+ "9\n shivom's music\n "
+    			+ "9\n kiv\n "
     			+ "15\n "
-    			+ "19\n shiv\n tired\n "
-    			+ "19\n shivom's music\n fake\n "
-    			+ "19\n shivom's music\n tired\n "
+    			+ "19\n shiv\n tired\n adele\n "
+    			+ "19\n shivom's music\n fake\n fake\n "
+    			+ "19\n shivom's music\n tired\n adele\n "
     			+ "22\n";
     	inputStream = new ByteArrayInputStream(command.getBytes());
     	System.setIn(inputStream);
@@ -122,18 +124,18 @@ class TestLibraryView {
     @Test
     void testRatingAndFavoriting() {
     	command = "16\n "
-    			+ "10\n tired\n "
-    			+ "10\n cold shoulder\n "
-    			+ "20\n tired\n "
-    			+ "20\n ww\n "
-    			+ "21\n cold shoulder\n 3\n "
-    			+ "21\n cold shoulder\n sdkf\n "
-    			+ "21\n skdfj\n 4\n "
-    			+ "21\n cold shoulder\n 5\n "
+    			+ "10\n tired\n adele\n "
+    			+ "10\n cold shoulder\n adele\n "
+    			+ "20\n tired\n adele\n "
+    			+ "20\n ww\n adele\n "
+    			+ "21\n cold shoulder\n adele\n 3\n "
+    			+ "21\n cold shoulder\n adele\n 0\n "
+    			+ "21\n skdfj\n adele\n 4\n "
+    			+ "21\n cold shoulder\n adele\n 5\n "
     			+ "16\n "
     			+ "22\n";
     	inputStream = new ByteArrayInputStream(command.getBytes());
     	System.setIn(inputStream);
     	view.main();
-    }
-}
+    } 
+} 

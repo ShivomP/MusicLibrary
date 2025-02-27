@@ -17,7 +17,7 @@ public class LibraryView {
 	public LibraryView(LibraryModel libraryModel) {
 		this.libraryModel = libraryModel;
 		this.scanner = new Scanner(System.in);	
-	}
+	} 
 	
 	public void menuView() {
 		System.out.println("Welcome to the Music Library");
@@ -27,9 +27,9 @@ public class LibraryView {
 		System.out.println("3. Search for an album by title type: '3'");
 		System.out.println("4. Search for an album by artist type: '4'");
 		System.out.println("5. Search for a song by title in your library type: '5'");
-		System.out.println("6. Search for a song by arist in your library type: '6'");
+		System.out.println("6. Search for a song by artist in your library type: '6'");
 		System.out.println("7. Search for an album by title in your library type: '7'");
-		System.out.println("8. Search for an album by arist in your library type: '8'");
+		System.out.println("8. Search for an album by artist in your library type: '8'");
 		System.out.println("9. Search for a playlist by name in your library type: '9'");
 		System.out.println("10. Add a song to the library type: '10'");
 		System.out.println("11. Add an album to the library type: '11'");
@@ -49,11 +49,13 @@ public class LibraryView {
 	private void searchStoreSongByTitle() {
 		System.out.println("Enter the song name: ");
         String title = scanner.nextLine().trim().toLowerCase();
-        Song song = libraryModel.songByTitle(title);
-        if (song != null) {
-            System.out.println(song.toString());
+        ArrayList<Song> songs = libraryModel.songByTitle(title);
+        if (!songs.isEmpty()) {
+        	for (int i = 0; i < songs.size(); i++) {
+        		System.out.println(songs.get(i).toString());
+        	}
         } else {
-            System.out.println("Song not found in the music store.");
+            System.out.println("Song not found in music store.");
         }
     }
 	
@@ -67,7 +69,7 @@ public class LibraryView {
                 System.out.println(song.toString());
             }
         } else {
-            System.out.println("Artist not found in the music store");
+            System.out.println("Artist not found in music store");
         }
     }
 	
@@ -93,18 +95,20 @@ public class LibraryView {
                 album.printSongs();
             }
         } else {
-            System.out.println("Artist not found in the music store");
+            System.out.println("Artist not found in music store");
         }
     }
 	
 	private void searchLibrarySongByTitle() {
 		System.out.println("Enter the song name: ");
         String title = scanner.nextLine().trim().toLowerCase();
-        Song song = libraryModel.mySongByTitle(title);
-        if (song != null) {
-            System.out.println(song.toString());
+        ArrayList<Song> songs = libraryModel.mySongByTitle(title);
+        if (!songs.isEmpty()) {
+        	for(int i = 0; i <songs.size(); i++) {
+        		System.out.println(songs.get(i).toString());
+        	}
         } else {
-            System.out.println("Song not found in the library");
+            System.out.println("Song not found in your library");
         }
     }
 	
@@ -117,7 +121,7 @@ public class LibraryView {
                 System.out.println(song.toString());
             }
         } else {
-            System.out.println("Artist not found in the library");
+            System.out.println("Artist not found in your library");
         }
     }
 	
@@ -129,7 +133,7 @@ public class LibraryView {
 			System.out.println(album.toString());
 			album.printSongs();
 		} else {
-			System.out.println("Album not found in the library");
+			System.out.println("Album not found in your library");
 		}	
 	}
 	
@@ -143,7 +147,7 @@ public class LibraryView {
                 album.printSongs();
             }
         } else {
-            System.out.println("Artist not found in the library");
+            System.out.println("Artist not found in your library");
         }
     }
 	
@@ -161,10 +165,13 @@ public class LibraryView {
 	private void addSongToLibrary() {
 	    System.out.println("Enter the song name: ");
 	    String songName = scanner.nextLine().trim().toLowerCase();
-	    if (libraryModel.mySongByTitle(songName) != null) {
+	    System.out.println("Enter the song artist: ");
+	    String artistName = scanner.nextLine().trim().toLowerCase();
+	    
+	    if (libraryModel.mySongByNameAndArtist(songName, artistName) != null) {
 	        System.out.println("Song already exists in your library");
 	    } else {
-	    	boolean songAdded = libraryModel.addSong(songName);
+	    	boolean songAdded = libraryModel.addSong(songName, artistName);
 		    if (songAdded) {
 		        System.out.println("Song added to your library.");
 		    } else {
@@ -172,7 +179,7 @@ public class LibraryView {
 		    } 	
 	   }
 	}
-	
+
 	private void addAlbumToLibrary() {
 		System.out.println("Enter the album name: ");
 	    String albumName = scanner.nextLine().trim().toLowerCase();
@@ -260,12 +267,14 @@ public class LibraryView {
 		String playlistName = scanner.nextLine().trim().toLowerCase();
 		System.out.println("Enter the song name: ");
 		String songTitle = scanner.nextLine().trim().toLowerCase();
+		System.out.println("Enter the artist name: ");
+		String artistName = scanner.nextLine().trim().toLowerCase();
 		
 		if (libraryModel.searchPlaylists(playlistName) != null) {
 			
-			if(!libraryModel.searchPlaylists(playlistName).getSongNames().contains(songTitle)) {
+			if(!libraryModel.searchPlaylists(playlistName).getSongAndArtistNames().contains(songTitle + " " + artistName)) {
 				
-				boolean songAdded = libraryModel.addSongToPlaylist(playlistName, songTitle);
+				boolean songAdded = libraryModel.addSongToPlaylist(playlistName, songTitle, artistName);
 				if (songAdded) {
 					System.out.println("Song added to playlist");
 				} else {
@@ -285,7 +294,10 @@ public class LibraryView {
         String playlistName = scanner.nextLine().trim().toLowerCase();
         System.out.println("Enter the song name: ");
         String songTitle = scanner.nextLine().trim().toLowerCase();
-        boolean songRemoved = libraryModel.removeSongFromPlaylist(playlistName, songTitle);
+        System.out.println("Enter the artist name: ");
+        String artistName = scanner.nextLine().trim().toLowerCase();
+        
+        boolean songRemoved = libraryModel.removeSongFromPlaylist(playlistName, songTitle, artistName);
         if (songRemoved) {
             System.out.println("Song removed from playlist");
         } else {
@@ -297,7 +309,11 @@ public class LibraryView {
 	private void markSongFavorite() {
         System.out.println("Enter the song name: ");
         String songTitle = scanner.nextLine().trim().toLowerCase();
-        boolean favMarked = libraryModel.markSongFavorite(songTitle);
+        System.out.println("Enter the artist name: ");
+        String artistName = scanner.nextLine().trim().toLowerCase();
+        
+        
+        boolean favMarked = libraryModel.markSongFavorite(songTitle, artistName);
         if (favMarked) {
             System.out.println("Song marked as favorite");
         } else {
@@ -308,15 +324,18 @@ public class LibraryView {
 	private void rateSong() {
         System.out.println("Enter the song name: ");
         String songTitle = scanner.nextLine().trim().toLowerCase();
+        System.out.println("Enter the artist name: ");
+        String artistName = scanner.nextLine().trim().toLowerCase();
         System.out.println("Enter the rating (1-5): ");
-        String songRating = scanner.nextLine().trim().toLowerCase();
+        String songRating = scanner.nextLine().trim();
+        
         try { 
-        	Integer.parseInt(songRating);
+        	Integer.parseInt(songRating); 
         	
         	if (Integer.parseInt(songRating) < 1 || Integer.parseInt(songRating) > 5) {
         		System.out.println("Enter a valid rating (1-5)");
         	} else {
-        		boolean songRated = libraryModel.rateSong(songTitle, songRating);
+        		boolean songRated = libraryModel.rateSong(songTitle, artistName, songRating);
         		if (songRated) {
         			System.out.println("Song rated");
         		} else {

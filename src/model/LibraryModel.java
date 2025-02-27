@@ -25,14 +25,16 @@ public class LibraryModel {
 		this.myAlbums = new ArrayList<Album>();
 	}
 	
-	public Song songByTitle(String songName) {
+	public ArrayList<Song> songByTitle(String songName) {
+		ArrayList<Song> songsWithName = new ArrayList<Song>();
+		
 		for (int i = 0; i < allSongs.size(); i++) {
-			if (allSongs.get(i).getTitle().toLowerCase().equals(songName)) {
-				return new Song(allSongs.get(i));
+			if (allSongs.get(i).getTitle().toLowerCase().equals(songName.toLowerCase())) {
+				songsWithName.add(new Song(allSongs.get(i)));
 			}
 		}
 		
-		return null;
+		return songsWithName;
 	}
 	
 	public ArrayList<Song> songByArtist(String artist) {
@@ -69,19 +71,37 @@ public class LibraryModel {
 		return artistAlbums;
 	}
 	
-	public Song mySongByTitle(String songName) {
+	public ArrayList<Song> mySongByTitle(String songName) {
+		ArrayList<Song> songsWithName = new ArrayList<Song>();
+		
 		for (int i = 0; i < mySongs.size(); i++) {
 			if (mySongs.get(i).getTitle().toLowerCase().equals(songName)) {
-				return new Song(mySongs.get(i));
+				songsWithName.add(new Song(mySongs.get(i)));
+			}
+		}
+		
+		return songsWithName;
+	}
+	
+	public Song songByNameAndArtist(String song, String artist) {
+		for (int i = 0; i < allSongs.size(); i++) {
+			String curSongName = this.allSongs.get(i).getTitle().toLowerCase();
+			String curSongArtist = this.allSongs.get(i).getArtist().toLowerCase();
+			
+			if (curSongName.equals(song.toLowerCase()) && curSongArtist.equals(artist.toLowerCase())) {
+				return this.allSongs.get(i);
 			}
 		}
 		
 		return null;
 	}
 	 
-	private Song mySongByName(String songName) {
+	public Song mySongByNameAndArtist(String songName, String artist) {
 		for (int i = 0; i < mySongs.size(); i++) {
-			if (mySongs.get(i).getTitle().toLowerCase().equals(songName)) {
+			String curSongName = this.mySongs.get(i).getTitle().toLowerCase();
+			String curSongArtist = this.mySongs.get(i).getArtist().toLowerCase();
+			
+			if (curSongName.equals(songName.toLowerCase()) && curSongArtist.equals(artist.toLowerCase())) {
 				return mySongs.get(i);
 			}
 		}
@@ -99,7 +119,7 @@ public class LibraryModel {
 		}
 		
 		return artistSongs;
-	}
+	} 
 	
 	public Album myAlbumByTitle(String albumName) {
 		for (int i = 0; i < myAlbums.size(); i++) {
@@ -133,9 +153,12 @@ public class LibraryModel {
 		return null;
 	}
 	
-	public boolean addSong(String song) {
+	public boolean addSong(String song, String artistName) {
 		for (int i = 0; i < this.allSongs.size(); i++) {
-			if (song.toLowerCase().equals(this.allSongs.get(i).getTitle().toLowerCase())) {
+			String curSongName = this.allSongs.get(i).getTitle().toLowerCase();
+			String curSongArtist = this.allSongs.get(i).getArtist().toLowerCase();
+			
+			if (song.toLowerCase().equals(curSongName) && artistName.toLowerCase().equals(curSongArtist)) {
 				mySongs.add(new Song(this.allSongs.get(i)));
 				return true;
 			}
@@ -146,13 +169,14 @@ public class LibraryModel {
 	
 	public boolean addAlbum(String album) {
 		for (int i = 0; i < this.allAlbums.size(); i++) {
+			
 			if (this.allAlbums.get(i).getTitle().toLowerCase().equals(album)) {
 				myAlbums.add(new Album(this.allAlbums.get(i)));
 				List<Song> albumSongs = this.allAlbums.get(i).getSongs();
 				
 				for (int j = 0; j < albumSongs.size(); j++) {
 					if(!(this.getSongTitles().contains(albumSongs.get(j).getTitle()))) {
-						this.addSong(albumSongs.get(j).getTitle());
+						this.addSong(albumSongs.get(j).getTitle(), albumSongs.get(j).getArtist());
 					}
 				}
 				
@@ -225,13 +249,13 @@ public class LibraryModel {
 		return true;
 	}
 	
-	public boolean addSongToPlaylist(String playlistName, String songName) {
+	public boolean addSongToPlaylist(String playlistName, String songName, String artistName) {
 		Playlist playlist = searchPlaylists(playlistName);
-		Song song = songByTitle(songName);
+		Song song = songByNameAndArtist(songName, artistName);
 		if (playlist != null && song != null) {
 			playlist.addSong(song);
-			if(!this.getSongTitles().contains(song.getTitle())) {
-				this.addSong(song.getTitle());
+			if(mySongByNameAndArtist(songName, artistName) == null) {
+				this.addSong(song.getTitle(), song.getArtist());
 			}
 			return true;
 		}
@@ -239,29 +263,32 @@ public class LibraryModel {
 		return false;
 	}
 	
-	public boolean removeSongFromPlaylist(String playlistName, String songName) {
+	public boolean removeSongFromPlaylist(String playlistName, String songName, String artistName) {
 		Playlist playlist = searchPlaylists(playlistName);
-		Song song = mySongByTitle(songName);
-		if (playlist != null && song != null && playlist.getSongNames().contains(song.getTitle().toLowerCase())) {
-			playlist.removeSong(song);
-			return true;
+		Song song = mySongByNameAndArtist(songName, artistName);
+		if (playlist != null && song != null) {
+			boolean songInPlaylist = playlist.getSongAndArtistNames().contains(songName.toLowerCase() + " " + artistName.toLowerCase());
+			if (songInPlaylist) {
+				playlist.removeSong(song);
+				return true;
+			}
 		}
 		
 		return false;
 	}
 	
-	public boolean markSongFavorite(String songName) {
-		Song song = mySongByName(songName);
+	public boolean markSongFavorite(String songName, String songArtist) {
+		Song song = mySongByNameAndArtist(songName, songArtist);
 		if (song != null) {
 			song.favoriteSong();
 			return true;
 		}
 		
 		return false;
-	}
+	} 
 	
-	public boolean rateSong(String songName, String rating) {
-		Song song = mySongByName(songName);
+	public boolean rateSong(String songName, String artistName, String rating) {
+		Song song = mySongByNameAndArtist(songName, artistName);
 		if (song != null) {
 			song.rate(rating);
 			return true;

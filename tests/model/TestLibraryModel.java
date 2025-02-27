@@ -10,8 +10,8 @@ class TestLibraryModel {
 
     @Test
     void testSongByTitle() {
-    	assertEquals("Cold Shoulder", libraryModel.songByTitle("cold shoulder").getTitle());
-    	Assert.assertNull(libraryModel.songByTitle("sdkfhsa"));
+    	assertEquals("Cold Shoulder", libraryModel.songByTitle("cold shoulder").get(0).getTitle());
+    	assertTrue(libraryModel.songByTitle("sdkfhsa").isEmpty());
     }
     
     @Test
@@ -34,15 +34,15 @@ class TestLibraryModel {
     
     @Test
     void testMySongByTitle() {
-    	libraryModel.addSong("cold shoulder");
-    	assertEquals("Cold Shoulder", libraryModel.mySongByTitle("cold shoulder").getTitle());
-    	Assert.assertNull(libraryModel.mySongByTitle("sdkfhsa"));
+    	libraryModel.addSong("cold shoulder", "adele");
+    	assertEquals("Cold Shoulder", libraryModel.mySongByTitle("cold shoulder").get(0).getTitle());
+    	assertTrue(libraryModel.mySongByTitle("sdfhsk").isEmpty());
     }
     
     @Test
     void testMySongByArtist() {
-    	libraryModel.addSong("cold shoulder");
-    	libraryModel.addSong("tired");
+    	libraryModel.addSong("cold shoulder", "adele");
+    	libraryModel.addSong("tired", "adele");
     	assertEquals("Adele", libraryModel.mySongByArtist("adele").get(1).getArtist());
     	assertTrue(libraryModel.mySongByArtist("Juice WRLD").isEmpty());
     }
@@ -71,7 +71,8 @@ class TestLibraryModel {
     
     @Test
     void testAddSong() {
-    	assertFalse(libraryModel.addSong("not a song"));
+    	assertFalse(libraryModel.addSong("not a song", "adele"));
+    	assertFalse(libraryModel.addSong("tired", "bad artist"));
     }
     
     @Test
@@ -82,8 +83,8 @@ class TestLibraryModel {
     @Test
     void testGetSongTitles() {
     	assertTrue(libraryModel.getSongTitles().isEmpty());
-    	libraryModel.addSong("tired");
-    	libraryModel.addSong("cold shoulder");
+    	libraryModel.addSong("tired", "adele");
+    	libraryModel.addSong("cold shoulder", "adele");
     	assertEquals("Cold Shoulder", libraryModel.getSongTitles().get(1));
     }
     
@@ -114,9 +115,9 @@ class TestLibraryModel {
     @Test
     void testGetFavoriteSongs() {
     	assertTrue(libraryModel.getFavoriteSongs().isEmpty());
-    	libraryModel.addSong("tired");
-    	libraryModel.addSong("cold shoulder"); 
-    	libraryModel.markSongFavorite("cold shoulder");
+    	libraryModel.addSong("tired", "adele");
+    	libraryModel.addSong("cold shoulder", "adele"); 
+    	libraryModel.markSongFavorite("cold shoulder", "adele");
     	assertEquals("Cold Shoulder", libraryModel.getFavoriteSongs().get(0));
     }
     
@@ -130,34 +131,38 @@ class TestLibraryModel {
     @Test
     void testAddSongToPlaylist() {
     	libraryModel.createPlaylist("shivom");
-    	assertTrue(libraryModel.addSongToPlaylist("shivom", "tired"));
-    	assertFalse(libraryModel.addSongToPlaylist("water", "tired"));
-    	assertFalse(libraryModel.addSongToPlaylist("shivom", "sdkfsad"));
+    	assertTrue(libraryModel.addSongToPlaylist("shivom", "tired", "adele"));
+    	assertFalse(libraryModel.addSongToPlaylist("water", "tired", "adele"));
+    	assertFalse(libraryModel.addSongToPlaylist("shivom", "sdkfsad", "adele"));
+    	assertFalse(libraryModel.addSongToPlaylist("shivom", "tired", "adadas"));
      }
     
     @Test
     void testRemoveSongFromPlaylist() {
     	libraryModel.createPlaylist("shivom");
-    	libraryModel.addSongToPlaylist("shivom", "tired");
-    	assertTrue(libraryModel.removeSongFromPlaylist("shivom", "tired"));
-    	assertFalse(libraryModel.removeSongFromPlaylist("shivom", "sdkfsad"));
-    	libraryModel.addSongToPlaylist("shivom", "tired");
-    	assertFalse(libraryModel.removeSongFromPlaylist("hello", "tired"));
+    	libraryModel.addSongToPlaylist("shivom", "tired", "adele");
+    	assertTrue(libraryModel.removeSongFromPlaylist("shivom", "tired", "adele"));
+    	assertFalse(libraryModel.removeSongFromPlaylist("shivom", "sdkfsad", "adele"));
+    	assertFalse(libraryModel.removeSongFromPlaylist("shivom", "tired", "shivom"));
+    	libraryModel.addSongToPlaylist("shivom", "tired", "adele");
+    	assertFalse(libraryModel.removeSongFromPlaylist("hello", "tired", "adele"));
      }
     
     @Test
     void testMarkSongFavorite() {
-    	libraryModel.addSong("tired");
-    	libraryModel.addSong("cold shoulder"); 
-    	assertTrue(libraryModel.markSongFavorite("cold shoulder"));
-    	assertFalse(libraryModel.markSongFavorite("shivom"));
+    	libraryModel.addSong("tired", "adele");
+    	libraryModel.addSong("cold shoulder", "adele"); 
+    	assertTrue(libraryModel.markSongFavorite("cold shoulder", "adele"));
+    	assertFalse(libraryModel.markSongFavorite("shivom", "adele"));
+    	assertFalse(libraryModel.markSongFavorite("tired", "shivom"));
      }
     
     @Test
     void testRateSong() {
-    	libraryModel.addSong("Tired");
-    	libraryModel.addSong("Cold Shoulder"); 
-    	assertTrue(libraryModel.rateSong("cold shoulder", "3"));
-    	assertFalse(libraryModel.rateSong("Shivom", "5"));
+    	libraryModel.addSong("Tired", "adele");
+    	libraryModel.addSong("Cold Shoulder", "adele"); 
+    	assertTrue(libraryModel.rateSong("cold shoulder", "adele", "3"));
+    	assertFalse(libraryModel.rateSong("Shivom", "adele", "5"));
+    	assertFalse(libraryModel.rateSong("tired", "shivom", "5"));
      }
 }

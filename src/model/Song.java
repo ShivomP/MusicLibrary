@@ -51,7 +51,7 @@ public class Song {
 				favorite = true;
 				break;
 			default:
-				System.out.println("Invalid input try again!");
+				System.out.println("Must enter a valid rating (1-5)");
 		}
 	}
 	
