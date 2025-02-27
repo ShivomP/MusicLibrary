@@ -50,7 +50,7 @@ public class Album {
     }
     
     public String toString() {
-        return title + "," + artist + "," + genre + "," + year;
+        return title + ", " + artist + ", " + genre + ", " + year;
     }
     
     public void printSongs() { 

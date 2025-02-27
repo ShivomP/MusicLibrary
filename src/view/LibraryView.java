@@ -262,7 +262,9 @@ public class LibraryView {
 		String songTitle = scanner.nextLine().trim().toLowerCase();
 		
 		if (libraryModel.searchPlaylists(playlistName) != null) {
+			
 			if(!libraryModel.searchPlaylists(playlistName).getSongNames().contains(songTitle)) {
+				
 				boolean songAdded = libraryModel.addSongToPlaylist(playlistName, songTitle);
 				if (songAdded) {
 					System.out.println("Song added to playlist");
@@ -287,7 +289,7 @@ public class LibraryView {
         if (songRemoved) {
             System.out.println("Song removed from playlist");
         } else {
-            System.out.println("Could not remove song from playlist. Check if playlist and song both exist in your library");
+            System.out.println("Could not remove song from playlist. Check if playlist is in your library and song is in your playlist");
         }
     }
 
@@ -308,15 +310,21 @@ public class LibraryView {
         String songTitle = scanner.nextLine().trim().toLowerCase();
         System.out.println("Enter the rating (1-5): ");
         String songRating = scanner.nextLine().trim().toLowerCase();
-        if (Integer.parseInt(songRating) < 1 || Integer.parseInt(songRating) > 5) {
-        	System.out.println("Enter a valid rating (1-5");
-        } else {
-        	boolean songRated = libraryModel.rateSong(songTitle, songRating);
-        	if (songRated) {
-        		System.out.println("Song rated");
+        try { 
+        	Integer.parseInt(songRating);
+        	
+        	if (Integer.parseInt(songRating) < 1 || Integer.parseInt(songRating) > 5) {
+        		System.out.println("Enter a valid rating (1-5)");
         	} else {
-        		System.out.println("Song not found in your library.");
+        		boolean songRated = libraryModel.rateSong(songTitle, songRating);
+        		if (songRated) {
+        			System.out.println("Song rated");
+        		} else {
+        			System.out.println("Song not found in your library.");
+        		}
         	}
+        } catch (NumberFormatException e) {
+        	System.out.println("Enter a valid rating (1-5)");
         }
     }
 	
@@ -392,6 +400,7 @@ public class LibraryView {
 					rateSong();
 					break;
 				case "22":
+					System.out.println("Goodbye!");
 					running = false;
 					break;
 				default:

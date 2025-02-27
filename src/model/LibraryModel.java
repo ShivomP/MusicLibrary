@@ -242,7 +242,7 @@ public class LibraryModel {
 	public boolean removeSongFromPlaylist(String playlistName, String songName) {
 		Playlist playlist = searchPlaylists(playlistName);
 		Song song = mySongByTitle(songName);
-		if (playlist != null && song != null && playlist.getSongNames().contains(song.getTitle())) {
+		if (playlist != null && song != null && playlist.getSongNames().contains(song.getTitle().toLowerCase())) {
 			playlist.removeSong(song);
 			return true;
 		}

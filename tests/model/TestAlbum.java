@@ -6,10 +6,6 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-// File: TestAlbum.java
-// Author: Viswa Sushanth Karuturi
-// Purpose: Unit tests for the Album class
-
 public class TestAlbum {
 
     Album album = new Album("After Hours", "The Weeknd", "R&B", "2020");
@@ -49,7 +45,7 @@ public class TestAlbum {
 
     @Test
     public void testToString() {
-        String expected = "After Hours,The Weeknd,R&B,2020";
+        String expected = "After Hours, The Weeknd, R&B, 2020";
         assertEquals(expected, album.toString());
     }
 

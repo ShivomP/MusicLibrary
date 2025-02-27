@@ -25,7 +25,7 @@ public class Playlist {
 	public ArrayList<String> getSongNames() {
 		ArrayList<String> songNames = new ArrayList<String>();
 		for (int i = 0; i < this.songs.size(); i++) {
-			songNames.add(this.songs.get(i).getTitle()); 
+			songNames.add(this.songs.get(i).getTitle().toLowerCase()); 
 		}
 		
 		return songNames;

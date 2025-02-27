@@ -50,6 +50,8 @@ public class Song {
 				this.rating = Rating.FIVE;
 				favorite = true;
 				break;
+			default:
+				System.out.println("Invalid input try again!");
 		}
 	}
 	
