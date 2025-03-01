@@ -9,8 +9,6 @@ import org.junit.jupiter.api.Test;
 import model.*;
 
 class TestLibraryView {
-    LibraryModel model = new LibraryModel();
-    LibraryView view = new LibraryView(model);
     InputStream originalIn = System.in;
     String command;
     ByteArrayInputStream inputStream;
@@ -27,7 +25,7 @@ class TestLibraryView {
     			+ "22\n";
     	inputStream = new ByteArrayInputStream(command.getBytes());
     	System.setIn(inputStream);
-    	view.main();
+    	LibraryView.main(null);
     }
     
     @Test
@@ -37,7 +35,7 @@ class TestLibraryView {
     			+ "22\n";
     	inputStream = new ByteArrayInputStream(command.getBytes());
     	System.setIn(inputStream);
-    	view.main();
+    	LibraryView.main(null);
     }
     
     @Test
@@ -47,7 +45,7 @@ class TestLibraryView {
     			+ "22\n";
     	inputStream = new ByteArrayInputStream(command.getBytes());
     	System.setIn(inputStream);
-    	view.main();
+    	LibraryView.main(null);
     }
     
     @Test
@@ -57,7 +55,7 @@ class TestLibraryView {
     			+ "22\n";
     	inputStream = new ByteArrayInputStream(command.getBytes());
     	System.setIn(inputStream);
-    	view.main();
+    	LibraryView.main(null);
     }
     
     @Test
@@ -72,7 +70,7 @@ class TestLibraryView {
     			+ "22\n";
     	inputStream = new ByteArrayInputStream(command.getBytes());
     	System.setIn(inputStream);
-    	view.main();
+    	LibraryView.main(null);
     }
     
     @Test
@@ -94,7 +92,7 @@ class TestLibraryView {
     			+ "22\n";
     	inputStream = new ByteArrayInputStream(command.getBytes());
     	System.setIn(inputStream);
-    	view.main();
+    	LibraryView.main(null);
     }
     
     
@@ -118,7 +116,7 @@ class TestLibraryView {
     			+ "22\n";
     	inputStream = new ByteArrayInputStream(command.getBytes());
     	System.setIn(inputStream);
-    	view.main();
+    	LibraryView.main(null);
     }
     
     @Test
@@ -136,6 +134,6 @@ class TestLibraryView {
     			+ "22\n";
     	inputStream = new ByteArrayInputStream(command.getBytes());
     	System.setIn(inputStream);
-    	view.main();
+    	LibraryView.main(null);
     } 
 } 
