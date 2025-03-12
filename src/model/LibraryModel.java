@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 // File: LibraryModel.java
@@ -15,14 +16,26 @@ public class LibraryModel {
 	private ArrayList<Playlist> playlists;
 	private ArrayList<Song> mySongs;
 	private ArrayList<Album> myAlbums;
+	private Playlist mostRecent;
+	private Playlist mostFrequent;
+	private String username;
+	private String password;
+	private HashMap genreFrequency;
 	
-	public LibraryModel() {
+	public LibraryModel(String username, String password) {
 		MusicStore store = new MusicStore();
 		this.allAlbums = store.getAlbumsList();
 		this.allSongs = store.getSongsList();
 		this.playlists = new ArrayList<Playlist>();
 		this.mySongs = new ArrayList<Song>();
 		this.myAlbums = new ArrayList<Album>();
+		this.mostRecent = new Playlist("Recently Played");
+		this.mostFrequent = new Playlist("Frequently Played");
+		this.setUsername(username);
+		this.setPassword(password);
+		this.genreFrequency = new HashMap<String, Integer>();
+		this.playlists.add(mostRecent);
+		this.playlists.add(mostFrequent);
 	}
 	
 	public ArrayList<Song> songByTitle(String songName) {
@@ -295,5 +308,31 @@ public class LibraryModel {
 		}
 		
 		return false;
+	}
+	
+	public boolean playSong(String songName, String artistName) {
+		Song song = mySongByNameAndArtist(songName, artistName);
+		if(song != null) {
+			song.increasePlayCount();
+			return true;
+		}
+		
+		return false;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 }

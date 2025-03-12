@@ -6,7 +6,7 @@ import java.util.List;
 
 class TestPlaylist {
 	Playlist playlist = new Playlist("Shivom's Playlist");
-	Song song = new Song("Pork Soda", "Glass Animals", "How to Be a Human Being");
+	Song song = new Song("Pork Soda", "Glass Animals", "How to Be a Human Being", "Alternative");
 
 
     @Test

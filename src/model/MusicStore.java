@@ -59,7 +59,7 @@ public class MusicStore {
                         albums.add(new Album(title, artist, genre, year));
                     } else {
                         String[] parts = line.split(",");
-                        Song curSong = new Song(parts[0].trim(), albums.get(i).getArtist(), albums.get(i).getTitle());
+                        Song curSong = new Song(parts[0].trim(), albums.get(i).getArtist(), albums.get(i).getTitle(), albums.get(i).getGenre());
                         albums.get(i).addSong(curSong);
                     }
                     count++;

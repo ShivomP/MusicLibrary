@@ -429,9 +429,9 @@ public class LibraryView {
 	}
 	
 	public static void main(String[] args) {
-        LibraryModel libraryModel = new LibraryModel();
-        LibraryView view = new LibraryView(libraryModel);
-        view.run();   
+//        LibraryModel libraryModel = new LibraryModel();
+//        LibraryView view = new LibraryView(libraryModel);
+//        view.run();   
     }
 	
 }

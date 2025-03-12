@@ -53,6 +53,10 @@ public class Album {
         return title + ", " + artist + ", " + genre + ", " + year;
     }
     
+    public String getGenre() {
+    	return this.genre;
+    }
+    
     public void printSongs() { 
     	// Prints each song title
     	for(int i = 0; i < this.songs.size(); i++) {

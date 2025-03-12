@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
 class TestSong {
-	Song song = new Song("Pork Soda", "Glass Animals", "How to Be a Human Being");
+	Song song = new Song("Pork Soda", "Glass Animals", "How to Be a Human Being", "Alternative");
 
     @Test
     void testCopyConstructor() {

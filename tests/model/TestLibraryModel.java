@@ -6,7 +6,7 @@ import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 
 class TestLibraryModel {
-    LibraryModel libraryModel = new LibraryModel();
+    LibraryModel libraryModel = new LibraryModel("Shivom", "Password");
 
     @Test
     void testSongByTitle() {

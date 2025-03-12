@@ -9,8 +9,8 @@ import static org.junit.jupiter.api.Assertions.*;
 public class TestAlbum {
 
     Album album = new Album("After Hours", "The Weeknd", "R&B", "2020");
-    Song song1 = new Song("Blinding Lights", "The Weeknd", "After Hours");
-    Song song2 = new Song("Save Your Tears", "The Weeknd", "After Hours");
+    Song song1 = new Song("Blinding Lights", "The Weeknd", "After Hours", "Pop");
+    Song song2 = new Song("Save Your Tears", "The Weeknd", "After Hours", "Pop");
 
     @Test
     public void testCopyConstructor() {

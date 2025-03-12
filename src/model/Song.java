@@ -11,13 +11,17 @@ public class Song {
 	private String album;
 	private Rating rating;
 	private boolean favorite;
+	private String genre;
+	private int playCount;
 	
-	public Song(String title, String artist, String album) {
+	public Song(String title, String artist, String album, String genre) {
 		this.title = title;
 		this.artist = artist;
 		this.album = album;
 		this.rating = null;
 		this.favorite = false;
+		this.genre = genre;
+		this.playCount = 0;
 	}
 	
 	public Song(Song song) {
@@ -77,6 +81,18 @@ public class Song {
 	
 	public Rating getRating() {
 		return this.rating;
+	}
+	
+	public String getGenre() {
+		return this.genre;
+	}
+	
+	public int getPlayCount() {
+		return this .playCount;
+	}
+	
+	public void increasePlayCount() {
+		this.playCount++;
 	}
 	
 	public String toString() {
