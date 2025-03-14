@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -33,7 +34,7 @@ public class LibraryModel {
 		this.mostFrequent = new Playlist("Frequently Played");
 		this.setUsername(username);
 		this.setPassword(password);
-		this.genreFrequency = new HashMap<String, Integer>();
+		this.genreFrequency = new HashMap<String, ArrayList<Song>>();
 		this.playlists.add(mostRecent);
 		this.playlists.add(mostFrequent);
 	}
@@ -314,10 +315,50 @@ public class LibraryModel {
 		Song song = mySongByNameAndArtist(songName, artistName);
 		if(song != null) {
 			song.increasePlayCount();
+			mostRecent.insertSongBeginning(song);
+			if (mostRecent.getSongs().size() > 10) {
+				mostRecent.removeLastSong();
+			}
 			return true;
 		}
 		
 		return false;
+	}
+	
+	public boolean removeSong(String songName, String artistName) {
+		Song song = mySongByNameAndArtist(songName, artistName);
+		if (song != null) {
+			this.mySongs.remove(song);
+			return true;
+		}
+		
+		return false;
+	}
+	
+	public boolean removeAlbum(String albumName) {
+		Album album = myAlbumByTitle(albumName);
+		if (album != null) {
+			this.myAlbums.remove(album);
+			
+			List<Song> albumSongs = album.getSongs();
+			for (Song song : this.mySongs) {
+				if (albumSongs.contains(song)) {
+					mySongs.remove(song);
+				}
+			}
+			
+			return true;
+		}
+		
+		return false;
+	}
+	
+	public List<Song> searchSongsByGenre(String genre) {
+		if (this.genreFrequency.containsKey(genre)) {
+			return Collections.unmodifiableList((List<Song>) this.genreFrequency.get(genre));
+		}
+		
+		return null;
 	}
 
 	public String getUsername() {

@@ -34,6 +34,14 @@ public class Playlist {
 		return songNames;
 	}
 	
+	public void insertSongBeginning(Song song) {
+		songs.add(0, song);
+	}
+	
+	public void removeLastSong() {
+		songs.remove(songs.size() - 1);
+	}
+	
 	public void addSong(Song song) {
 		songs.add(song);
 	}
