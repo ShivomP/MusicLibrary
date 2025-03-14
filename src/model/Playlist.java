@@ -59,4 +59,8 @@ public class Playlist {
 			System.out.println(this.songs.get(i).getTitle() + " - " + this.songs.get(i).getArtist());
 		}
 	}
+	
+	public void shuffle() {
+		Collections.shuffle(songs);
+	}
 }

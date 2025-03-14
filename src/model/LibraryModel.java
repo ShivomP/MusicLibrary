@@ -360,6 +360,10 @@ public class LibraryModel {
 		
 		return null;
 	}
+	
+	public void shuffle() {
+		Collections.shuffle(this.mySongs);
+	}
 
 	public String getUsername() {
 		return username;
