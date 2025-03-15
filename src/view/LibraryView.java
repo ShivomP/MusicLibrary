@@ -1,6 +1,7 @@
 package view;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import model.*;
@@ -43,7 +44,13 @@ public class LibraryView {
 		System.out.println("19. Remove a song from your playlist type: '19'");
 		System.out.println("20. Mark a song as favorite in your library type: '20'");
 		System.out.println("21. Rate a song in your library type: '21'");
-		System.out.println("22. EXIT type: '22'");		
+		System.out.println("22. Get list of songs sorted by title: '22'");
+		System.out.println("23. Get list of songs sorted by artist: '23'");
+		System.out.println("24. Get list of songs sorted by rating: '24'");
+		System.out.println("25. Remove song from library: '25'");
+		System.out.println("26. Remove alnum from library: '26'");
+		System.out.println("27. Search for songs by genre: '27'");
+//		System.out.println("22. EXIT type: '22'");		
 	}
 	
 	private void searchStoreSongByTitle() {
@@ -347,6 +354,83 @@ public class LibraryView {
         }
     }
 	
+	private void sortSongsByTitle() {
+		List<Song> sorted = libraryModel.sortBySongTitle();
+		
+		if (sorted == null) {
+			System.out.println("No songs in your library.");
+		} else {
+			for (Song song : sorted) {
+				System.out.println(song);
+			}
+		}
+	}
+	
+	private void sortSongsByArtist() {
+		List<Song> sorted = libraryModel.sortBySongArtist();
+		
+		if (sorted == null) {
+			System.out.println("No songs in your library.");
+		} else {
+			for (Song song : sorted) {
+				System.out.println(song);
+			}
+		}
+	}
+	
+	private void sortSongsByRating() {
+		List<Song> sorted = libraryModel.sortBySongRating();
+		
+		if (sorted == null) {
+			System.out.println("No rated songs in your library.");
+		} else {
+			for (Song song : sorted) {
+				System.out.println(song);
+			}
+		}
+	}
+	
+	private void removeSongFromLibrary() {
+		System.out.println("Enter the song name: ");
+		String songTitle = scanner.nextLine().trim().toLowerCase();
+		System.out.println("Enter the artist name: ");
+		String artistName = scanner.nextLine().trim().toLowerCase();
+		
+		boolean result = libraryModel.removeSong(songTitle, artistName);
+		if(result) {
+			System.out.println("Song removed from library!");
+		} else {
+			System.out.println("Song does not exist in library!");
+		}
+	}
+	
+	private void removeAlbumFromLibrary() {
+		System.out.println("Enter the album name: ");
+		String albumTitle = scanner.nextLine().trim().toLowerCase();
+		
+		boolean result = libraryModel.removeAlbum(albumTitle);
+		if(result) {
+			System.out.println("Album removed from library!");
+		} else {
+			System.out.println("Album does not exist in library!");
+		}
+	}
+	
+	private void searchSongsByGenre() {
+		System.out.println("Enter the genre name: ");
+		String genre = scanner.nextLine().trim().toLowerCase();
+		
+		List <Song> genreSongs = libraryModel.searchSongsByGenre(genre);
+		
+		if(genreSongs == null) {
+			System.out.println("Genre does not exist in your library.");
+		} else {
+			for (Song song : genreSongs) {
+				System.out.println(song);
+			}
+		}
+	}
+	
 	private void run() {
 		boolean running = true;
 		while(running) {
@@ -419,9 +503,27 @@ public class LibraryView {
 					rateSong();
 					break;
 				case "22":
-					System.out.println("Goodbye!");
-					running = false;
+					sortSongsByTitle();
 					break;
+				case "23":
+					sortSongsByArtist();
+					break;
+				case "24":
+					sortSongsByRating();
+					break;
+				case "25":
+					removeSongFromLibrary();
+					break;
+				case "26":
+					removeAlbumFromLibrary();
+					break;
+				case "27":
+					searchSongsByGenre();
+					break;
+//				case "22":
+//					System.out.println("Goodbye!");
+//					running = false;
+//					break;
 				default:
 					System.out.println("Invalid input try again!");
 			}
