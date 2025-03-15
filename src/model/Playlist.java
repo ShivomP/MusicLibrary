@@ -34,6 +34,10 @@ public class Playlist {
 		return songNames;
 	}
 	
+	public void setSongs(ArrayList<Song> updatedSongs) {
+		songs = updatedSongs;
+	}
+	
 	public void insertSongBeginning(Song song) {
 		songs.add(0, song);
 	}
@@ -62,5 +66,16 @@ public class Playlist {
 	
 	public void shuffle() {
 		Collections.shuffle(songs);
+	}
+	
+	public void updateMostFrequent(ArrayList<Song> sortedFrequency) {
+		int i = 0;
+		while(sortedFrequency.get(i) != null && i < 10) {
+			if (songs.get(i) == null) {
+				songs.add(sortedFrequency.get(i));
+			} else {
+				songs.set(i, sortedFrequency.get(i));
+			}
+		}
 	}
 }

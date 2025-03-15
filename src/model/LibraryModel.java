@@ -19,9 +19,11 @@ public class LibraryModel {
 	private ArrayList<Album> myAlbums;
 	private Playlist mostRecent;
 	private Playlist mostFrequent;
+	private Playlist favoriteSongs;
+	private Playlist topRated;
 	private String username;
 	private String password;
-	private HashMap genreFrequency;
+	private HashMap<String, ArrayList<Song>> genreFrequency;
 	
 	public LibraryModel(String username, String password) {
 		MusicStore store = new MusicStore();
@@ -32,11 +34,15 @@ public class LibraryModel {
 		this.myAlbums = new ArrayList<Album>();
 		this.mostRecent = new Playlist("Recently Played");
 		this.mostFrequent = new Playlist("Frequently Played");
+		this.favoriteSongs = new Playlist("Favorite Songs");
+		this.topRated = new Playlist("Top Rated");
 		this.setUsername(username);
 		this.setPassword(password);
 		this.genreFrequency = new HashMap<String, ArrayList<Song>>();
 		this.playlists.add(mostRecent);
 		this.playlists.add(mostFrequent);
+		this.playlists.add(favoriteSongs);
+		this.playlists.add(topRated);
 	}
 	
 	public ArrayList<Song> songByTitle(String songName) {
@@ -173,7 +179,28 @@ public class LibraryModel {
 			String curSongArtist = this.allSongs.get(i).getArtist().toLowerCase();
 			
 			if (song.toLowerCase().equals(curSongName) && artistName.toLowerCase().equals(curSongArtist)) {
-				mySongs.add(new Song(this.allSongs.get(i)));
+				Song validSong = this.allSongs.get(i);
+				mySongs.add(new Song(validSong));
+				
+				ArrayList<Song> genreSongs = genreFrequency.get(validSong.getGenre());
+				
+				if (genreSongs != null) {
+					genreSongs.add(validSong);
+				} else {
+					genreSongs = new ArrayList<Song>();
+					genreSongs.add(validSong);
+					genreFrequency.put(validSong.getGenre(), genreSongs);
+				}
+				
+				if (genreSongs.size() >= 10) {
+					boolean noPlaylist = createPlaylist(validSong.getGenre());
+					if (noPlaylist == false) {
+						searchPlaylists(validSong.getGenre()).addSong(validSong);
+					} else {
+						searchPlaylists(validSong.getGenre()).setSongs(genreSongs);
+					}
+				}
+ 				
 				return true;
 			}
 		}
@@ -305,6 +332,15 @@ public class LibraryModel {
 		Song song = mySongByNameAndArtist(songName, artistName);
 		if (song != null) {
 			song.rate(rating);
+			
+			if (rating.equals("4") || rating.equals("5")) {
+				topRated.addSong(song);
+			}
+			
+			if (rating.equals("5")) {
+				favoriteSongs.addSong(song);
+			}
+			
 			return true;
 		}
 		
@@ -315,14 +351,25 @@ public class LibraryModel {
 		Song song = mySongByNameAndArtist(songName, artistName);
 		if(song != null) {
 			song.increasePlayCount();
+			
+			ArrayList<Song> frequencyList = sortFrequency();
+			mostFrequent.updateMostFrequent(frequencyList);
+			
 			mostRecent.insertSongBeginning(song);
 			if (mostRecent.getSongs().size() > 10) {
 				mostRecent.removeLastSong();
 			}
+			
 			return true;
 		}
 		
 		return false;
+	}
+	
+	private ArrayList<Song> sortFrequency() {
+		ArrayList<Song> sorted = new ArrayList<Song>(mySongs);
+		sorted.sort((songOne, songTwo) -> Integer.compare(songTwo.getPlayCount(), songOne.getPlayCount()));
+		return sorted;
 	}
 	
 	public boolean removeSong(String songName, String artistName) {
@@ -361,8 +408,40 @@ public class LibraryModel {
 		return null;
 	}
 	
-	public void shuffle() {
+	public boolean shuffleAllSongs() {
+		if (mySongs.size() < 2) {
+			return false;
+		}
 		Collections.shuffle(this.mySongs);
+		return true;
+	}
+	
+	public boolean shufflePlaylsit(String playlistName) {
+		Playlist p = searchPlaylists(playlistName);
+		if(p != null) {
+			p.shuffle();
+			return true;
+		}
+		
+		return false;
+	}
+	
+	public List<Song> sortBySongTitle() {
+		List<Song> sorted = new ArrayList<Song>(mySongs);
+		sorted.sort((songOne, songTwo) -> songOne.getTitle().compareTo(songTwo.getTitle()));
+		return sorted;
+	}
+	
+	public List<Song> sortBySongArtist() {
+		List<Song> sorted = new ArrayList<Song>(mySongs);
+		sorted.sort((songOne, songTwo) -> songOne.getArtist().compareTo(songTwo.getArtist()));
+		return sorted;
+	}
+	
+	public List<Song> sortBySongRating() {
+		List<Song> sorted = new ArrayList<Song>(mySongs);
+		sorted.sort((songOne, songTwo) -> songOne.getRating().compareTo(songTwo.getRating()));
+		return sorted;
 	}
 
 	public String getUsername() {
