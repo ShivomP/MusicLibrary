@@ -182,22 +182,22 @@ public class LibraryModel {
 				Song validSong = this.allSongs.get(i);
 				mySongs.add(new Song(validSong));
 				
-				ArrayList<Song> genreSongs = genreFrequency.get(validSong.getGenre());
+				ArrayList<Song> genreSongs = genreFrequency.get(validSong.getGenre().toLowerCase());
 				
 				if (genreSongs != null) {
 					genreSongs.add(validSong);
 				} else {
 					genreSongs = new ArrayList<Song>();
 					genreSongs.add(validSong);
-					genreFrequency.put(validSong.getGenre(), genreSongs);
+					genreFrequency.put(validSong.getGenre().toLowerCase(), genreSongs);
 				}
 				
 				if (genreSongs.size() >= 10) {
-					boolean noPlaylist = createPlaylist(validSong.getGenre());
+					boolean noPlaylist = createPlaylist(validSong.getGenre().toLowerCase());
 					if (noPlaylist == false) {
-						searchPlaylists(validSong.getGenre()).addSong(validSong);
+						searchPlaylists(validSong.getGenre().toLowerCase()).addSong(validSong);
 					} else {
-						searchPlaylists(validSong.getGenre()).setSongs(genreSongs);
+						searchPlaylists(validSong.getGenre().toLowerCase()).setSongs(genreSongs);
 					}
 				}
  				
@@ -387,11 +387,8 @@ public class LibraryModel {
 		if (album != null) {
 			this.myAlbums.remove(album);
 			
-			List<Song> albumSongs = album.getSongs();
-			for (Song song : this.mySongs) {
-				if (albumSongs.contains(song)) {
-					mySongs.remove(song);
-				}
+			for (Song song : album.getSongs()) {
+				removeSong(song.getTitle(), song.getArtist());
 			}
 			
 			return true;
@@ -442,6 +439,10 @@ public class LibraryModel {
 		List<Song> sorted = new ArrayList<Song>(mySongs);
 		sorted.sort((songOne, songTwo) -> songOne.getRating().compareTo(songTwo.getRating()));
 		return sorted;
+	}
+	
+	public List<Song> getLibrarySongs() {
+		return Collections.unmodifiableList(this.mySongs);
 	}
 
 	public String getUsername() {
