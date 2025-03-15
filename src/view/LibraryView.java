@@ -1,6 +1,7 @@
 package view;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -50,7 +51,9 @@ public class LibraryView {
 		System.out.println("25. Remove song from library: '25'");
 		System.out.println("26. Remove alnum from library: '26'");
 		System.out.println("27. Search for songs by genre: '27'");
-//		System.out.println("22. EXIT type: '22'");		
+		System.out.println("28. Shuffle songs in your library: '28'");
+		System.out.println("29. Shuffle playlists in your library: '29'");
+		System.out.println("30. EXIT type: '30'");		
 	}
 	
 	private void searchStoreSongByTitle() {
@@ -59,7 +62,24 @@ public class LibraryView {
         ArrayList<Song> songs = libraryModel.songByTitle(title);
         if (!songs.isEmpty()) {
         	for (int i = 0; i < songs.size(); i++) {
-        		System.out.println(songs.get(i).toString());
+        		Song curSong = songs.get(i);
+        		System.out.println(curSong.toString());
+        		
+        		System.out.println("Would you like the album information of this song: 'Y' or 'N'");
+        		String answer = scanner.nextLine().trim().toLowerCase();
+        		if (answer.equals("y")) {
+        			Album album = libraryModel.albumByTitle(curSong.getAlbum());
+        			System.out.println(album);
+        			album.printSongs();
+        			
+        			ArrayList<String> result = libraryModel.getAlbums();
+        			
+        			if(result != null && result.contains(album.getTitle())) {
+        				System.out.println("Your library contains this album");
+        			} else {
+        				System.out.println("Your library does not contain this album");
+        			}
+        		}
         	}
         } else {
             System.out.println("Song not found in music store.");
@@ -431,6 +451,35 @@ public class LibraryView {
 		}
 	}
 	
+	private void shuffleAllSongs() {
+		if (libraryModel.shuffleAllSongs()) {
+			Iterator<Song> songIterator = libraryModel.getSongIterator();
+			while (songIterator.hasNext()) {
+				System.out.println(songIterator.next());
+			}
+		} else {
+			System.out.println("Not enough songs to shuffle");
+		}
+	}
+	
+	private void shufflePlaylist() {
+		System.out.println("Enter the playlist name: ");
+		String playlistName = scanner.nextLine().trim().toLowerCase();
+		
+		boolean shuffled = libraryModel.shufflePlaylist(playlistName);
+		
+		if (shuffled) {
+			Iterator<Song> playlistIterator = libraryModel.getPlaylistIterator(libraryModel.searchPlaylists(playlistName));
+			while (playlistIterator.hasNext()) {
+				System.out.println(playlistIterator.next());
+			}
+		} else {
+			System.out.println("Playlist doesn't exist");
+		}
+		
+		
+	}
+	
 	private void run() {
 		boolean running = true;
 		while(running) {
@@ -520,10 +569,16 @@ public class LibraryView {
 				case "27":
 					searchSongsByGenre();
 					break;
-//				case "22":
-//					System.out.println("Goodbye!");
-//					running = false;
-//					break;
+				case "28":
+					shuffleAllSongs();
+					break;
+				case "29":
+					shufflePlaylist();
+					break;
+				case "30":
+					System.out.println("Goodbye!");
+					running = false;
+					break;
 				default:
 					System.out.println("Invalid input try again!");
 			}

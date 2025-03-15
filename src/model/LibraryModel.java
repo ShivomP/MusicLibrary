@@ -3,6 +3,7 @@ package model;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 // File: LibraryModel.java
@@ -322,6 +323,7 @@ public class LibraryModel {
 		Song song = mySongByNameAndArtist(songName, songArtist);
 		if (song != null) {
 			song.favoriteSong();
+			favoriteSongs.addSong(song);
 			return true;
 		}
 		
@@ -413,14 +415,23 @@ public class LibraryModel {
 		return true;
 	}
 	
-	public boolean shufflePlaylsit(String playlistName) {
+	public Iterator<Song> getSongIterator() {
+		return mySongs.iterator();
+	} 
+	
+	
+	public boolean shufflePlaylist(String playlistName) {
 		Playlist p = searchPlaylists(playlistName);
 		if(p != null) {
 			p.shuffle();
 			return true;
 		}
-		
+		 
 		return false;
+	}
+	
+	public Iterator<Song> getPlaylistIterator(Playlist playlistName) {
+		return playlistName.getSongs().iterator();
 	}
 	
 	public List<Song> sortBySongTitle() {
@@ -439,10 +450,6 @@ public class LibraryModel {
 		List<Song> sorted = new ArrayList<Song>(mySongs);
 		sorted.sort((songOne, songTwo) -> songOne.getRating().compareTo(songTwo.getRating()));
 		return sorted;
-	}
-	
-	public List<Song> getLibrarySongs() {
-		return Collections.unmodifiableList(this.mySongs);
 	}
 
 	public String getUsername() {
