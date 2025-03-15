@@ -23,10 +23,9 @@ public class LibraryModel {
 	private Playlist favoriteSongs;
 	private Playlist topRated;
 	private String username;
-	private String password;
 	private HashMap<String, ArrayList<Song>> genreFrequency;
 	
-	public LibraryModel(String username, String password) {
+	public LibraryModel(String username) {
 		MusicStore store = new MusicStore();
 		this.allAlbums = store.getAlbumsList();
 		this.allSongs = store.getSongsList();
@@ -38,7 +37,6 @@ public class LibraryModel {
 		this.favoriteSongs = new Playlist("Favorite Songs");
 		this.topRated = new Playlist("Top Rated");
 		this.setUsername(username);
-		this.setPassword(password);
 		this.genreFrequency = new HashMap<String, ArrayList<Song>>();
 		this.playlists.add(mostRecent);
 		this.playlists.add(mostFrequent);
@@ -458,13 +456,5 @@ public class LibraryModel {
 
 	public void setUsername(String username) {
 		this.username = username;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
 	}
 }

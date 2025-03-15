@@ -45,15 +45,16 @@ public class LibraryView {
 		System.out.println("19. Remove a song from your playlist type: '19'");
 		System.out.println("20. Mark a song as favorite in your library type: '20'");
 		System.out.println("21. Rate a song in your library type: '21'");
-		System.out.println("22. Get list of songs sorted by title: '22'");
-		System.out.println("23. Get list of songs sorted by artist: '23'");
-		System.out.println("24. Get list of songs sorted by rating: '24'");
-		System.out.println("25. Remove song from library: '25'");
-		System.out.println("26. Remove alnum from library: '26'");
-		System.out.println("27. Search for songs by genre: '27'");
-		System.out.println("28. Shuffle songs in your library: '28'");
-		System.out.println("29. Shuffle playlists in your library: '29'");
-		System.out.println("30. EXIT type: '30'");		
+		System.out.println("22. Get list of songs sorted by title type: '22'");
+		System.out.println("23. Get list of songs sorted by artist type: '23'");
+		System.out.println("24. Get list of songs sorted by rating type: '24'");
+		System.out.println("25. Remove song from library type: '25'");
+		System.out.println("26. Remove alnum from library type: '26'");
+		System.out.println("27. Search for songs by genre type: '27'");
+		System.out.println("28. Shuffle songs in your library type: '28'");
+		System.out.println("29. Shuffle songs in a playlist type: '29'");
+		System.out.println("30. Play a song type: '30'");
+		System.out.println("31. EXIT type: '31'");		
 	}
 	
 	private void searchStoreSongByTitle() {
@@ -480,6 +481,21 @@ public class LibraryView {
 		
 	}
 	
+	private void playSong() {
+		System.out.println("Enter the song name: ");
+		String songName = scanner.nextLine().trim().toLowerCase();
+		System.out.println("Enter the artist name: ");
+		String artistName = scanner.nextLine().trim().toLowerCase();
+		
+		boolean result = libraryModel.playSong(songName, artistName);
+		
+		if (result) {
+			System.out.println("Song is playing...");
+		} else {
+			System.out.println("Song does not exist in your library");
+		}
+	}
+	
 	private void run() {
 		boolean running = true;
 		while(running) {
@@ -576,6 +592,9 @@ public class LibraryView {
 					shufflePlaylist();
 					break;
 				case "30":
+					playSong();
+					break;
+				case "31":
 					System.out.println("Goodbye!");
 					running = false;
 					break;
