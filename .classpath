@@ -9,5 +9,7 @@
 	<classpathentry kind="src" path="tests"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
 	<classpathentry kind="lib" path="C:/Users/viswa/Downloads/jbcrypt-0.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Shivom/Downloads/jbcrypt-0.4.jar"/>
+	<classpathentry kind="lib" path="jbcrypt-0.4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
