@@ -1,9 +1,10 @@
 package view;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
+import java.io.ByteArrayInputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -25,6 +26,7 @@ public class LibraryView {
 		this.libraryModel = new LibraryModel();
 		this.scanner = new Scanner(System.in);	
 		this.path = "src/model/" + username + ".txt";
+		loadUserData();
 	} 
 	
 	public void menuView() {
@@ -548,13 +550,75 @@ public class LibraryView {
 		
 	}
 	
+	public void loadUserData() {
+		try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
+	        String line;
+	        while ((line = reader.readLine()) != null) {
+	            String command = line.trim();
+	            switch (command) {
+	                case "10": 
+	                    String songTitle = reader.readLine();
+	                    String artistName = reader.readLine();
+	                    libraryModel.addSong(songTitle, artistName);
+	                    break;
+	                case "11":
+	                    String albumName = reader.readLine();
+	                    libraryModel.addAlbum(albumName);
+	                    break;
+	                case "17": 
+	                    String playlistName = reader.readLine();
+	                    libraryModel.createPlaylist(playlistName);
+	                    break;
+	                case "18": 
+	                    String playlist = reader.readLine();
+	                    String song = reader.readLine();
+	                    String artist = reader.readLine();
+	                    libraryModel.addSongToPlaylist(playlist, song, artist);
+	                    break;
+	                case "19": 
+	                    String playlistTitle = reader.readLine();
+	                    String sTitle = reader.readLine();
+	                    String aName = reader.readLine();
+	                    libraryModel.removeSongFromPlaylist(playlistTitle, sTitle, aName);
+	                    break;
+	                case "20": 
+	                    String favSongTitle = reader.readLine();
+	                    String favArtist = reader.readLine();
+	                    libraryModel.markSongFavorite(favSongTitle, favArtist);
+	                    break;
+	                case "21": 
+	                    String rateSongTitle = reader.readLine();
+	                    String rateArtist = reader.readLine();
+	                    String rating = reader.readLine();
+	                    libraryModel.rateSong(rateSongTitle, rateArtist, rating);
+	                    break;
+	                case "25": 
+	                    String removeSongTitle = reader.readLine();
+	                    String removeArtist = reader.readLine();
+	                    libraryModel.removeSong(removeSongTitle, removeArtist);
+	                    break;
+	                case "26": 
+	                    String album = reader.readLine();
+	                    libraryModel.removeAlbum(album);
+	                    break;
+	                case "30": 
+	                    break;
+	                default:
+	                	System.out.println("Invalid input try again!");
+	            }
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	}
+	
 	public void run() {
 		boolean running = true;
 		while(running) {
 			menuView();
 			System.out.println("Enter your choice! ");
-			String input = scanner.nextLine();
-			
+			String input = scanner.nextLine();				
+				
 			switch(input.trim()) {
 				case "1":
 					searchStoreSongByTitle();
