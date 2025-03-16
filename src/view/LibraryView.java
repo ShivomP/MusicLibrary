@@ -199,14 +199,11 @@ public class LibraryView {
 	}
 	
 	private void addSongToLibrary() {
-		saveUserData("10");
 	    System.out.println("Enter the song name: ");
 	    String songName = scanner.nextLine().trim().toLowerCase();
-	    saveUserData(songName);
 	    
 	    System.out.println("Enter the song artist: ");
 	    String artistName = scanner.nextLine().trim().toLowerCase();
-	    saveUserData(artistName);
 	    
 	    
 	    if (libraryModel.mySongByNameAndArtist(songName, artistName) != null) {
@@ -215,6 +212,9 @@ public class LibraryView {
 	    	boolean songAdded = libraryModel.addSong(songName, artistName);
 		    if (songAdded) {
 		        System.out.println("Song added to your library.");
+		        saveUserData("10");
+		        saveUserData(songName);
+		        saveUserData(artistName);
 		    } else {
 		        System.out.println("Song not found in the music store");
 		    } 	
