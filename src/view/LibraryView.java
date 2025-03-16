@@ -1,5 +1,9 @@
 package view;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -15,10 +19,12 @@ import model.*;
 public class LibraryView {
 	private LibraryModel libraryModel;
 	private Scanner scanner;
+	private String path;
 	
-	public LibraryView(LibraryModel libraryModel) {
-		this.libraryModel = libraryModel;
+	public LibraryView(String username) {
+		this.libraryModel = new LibraryModel();
 		this.scanner = new Scanner(System.in);	
+		this.path = "src/model/" + username + ".txt";
 	} 
 	
 	public void menuView() {
@@ -191,10 +197,15 @@ public class LibraryView {
 	}
 	
 	private void addSongToLibrary() {
+		saveUserData("10");
 	    System.out.println("Enter the song name: ");
 	    String songName = scanner.nextLine().trim().toLowerCase();
+	    saveUserData(songName);
+	    
 	    System.out.println("Enter the song artist: ");
 	    String artistName = scanner.nextLine().trim().toLowerCase();
+	    saveUserData(artistName);
+	    
 	    
 	    if (libraryModel.mySongByNameAndArtist(songName, artistName) != null) {
 	        System.out.println("Song already exists in your library");
@@ -209,14 +220,18 @@ public class LibraryView {
 	}
 
 	private void addAlbumToLibrary() {
+		
 		System.out.println("Enter the album name: ");
 	    String albumName = scanner.nextLine().trim().toLowerCase();
+	    
 	    if (libraryModel.myAlbumByTitle(albumName) != null) {
 	        System.out.println("Album already exists in your library");
 	    } else {
 	    	boolean albumAdded = libraryModel.addAlbum(albumName);
 		    if (albumAdded) {
 		        System.out.println("Album added to your library.");
+		        saveUserData("11");
+		        saveUserData(albumName);
 		    } else {
 		        System.out.println("Album not found in the music store");
 		    } 	
@@ -279,12 +294,15 @@ public class LibraryView {
 	}
 	
 	private void createMyPlaylist() {
+		
 		System.out.println("Enter the playlist name: ");
 		String playlistName = scanner.nextLine().trim().toLowerCase();
 		boolean playlistCreated = libraryModel.createPlaylist(playlistName);
 		
 		if(playlistCreated) {
 			System.out.println("Playlist created");		
+			saveUserData("17");
+			saveUserData(playlistName);
 		} else {
 			System.out.println("Playlist already exits");
 		}	
@@ -305,6 +323,10 @@ public class LibraryView {
 				boolean songAdded = libraryModel.addSongToPlaylist(playlistName, songTitle, artistName);
 				if (songAdded) {
 					System.out.println("Song added to playlist");
+					saveUserData("18");
+					saveUserData(playlistName);
+					saveUserData(songTitle);
+					saveUserData(artistName);
 				} else {
 					System.out.println("Could not add song to playlist. Song does not exist in music store");
 				}
@@ -328,6 +350,10 @@ public class LibraryView {
         boolean songRemoved = libraryModel.removeSongFromPlaylist(playlistName, songTitle, artistName);
         if (songRemoved) {
             System.out.println("Song removed from playlist");
+            saveUserData("19");
+            saveUserData(playlistName);
+            saveUserData(songTitle);
+            saveUserData(artistName);
         } else {
             System.out.println("Could not remove song from playlist. Check if playlist is in your library and song is in your playlist");
         }
@@ -344,6 +370,9 @@ public class LibraryView {
         boolean favMarked = libraryModel.markSongFavorite(songTitle, artistName);
         if (favMarked) {
             System.out.println("Song marked as favorite");
+            saveUserData("20");
+            saveUserData(songTitle);
+            saveUserData(artistName);
         } else {
             System.out.println("Song not found in your library");
         }
@@ -366,6 +395,10 @@ public class LibraryView {
         		boolean songRated = libraryModel.rateSong(songTitle, artistName, songRating);
         		if (songRated) {
         			System.out.println("Song rated");
+        			saveUserData("21");
+        			saveUserData(songTitle);
+        			saveUserData(artistName);
+        			saveUserData(songRating);
         		} else {
         			System.out.println("Song not found in your library.");
         		}
@@ -420,6 +453,9 @@ public class LibraryView {
 		boolean result = libraryModel.removeSong(songTitle, artistName);
 		if(result) {
 			System.out.println("Song removed from library!");
+			saveUserData("25");
+			saveUserData(songTitle);
+			saveUserData(artistName);
 		} else {
 			System.out.println("Song does not exist in library!");
 		}
@@ -432,6 +468,8 @@ public class LibraryView {
 		boolean result = libraryModel.removeAlbum(albumTitle);
 		if(result) {
 			System.out.println("Album removed from library!");
+			saveUserData("26");
+			saveUserData(albumTitle);
 		} else {
 			System.out.println("Album does not exist in library!");
 		}
@@ -491,12 +529,26 @@ public class LibraryView {
 		
 		if (result) {
 			System.out.println("Song is playing...");
+			saveUserData("30");
+			saveUserData(songName);
+			saveUserData(artistName);
 		} else {
 			System.out.println("Song does not exist in your library");
 		}
 	}
 	
-	private void run() {
+	private void saveUserData(String data) {
+		try {
+			FileWriter writer = new FileWriter(path, true);
+			writer.write(data + System.lineSeparator());
+			writer.close();
+		} catch (Exception e) {
+		      e.printStackTrace();
+		}
+		
+	}
+	
+	public void run() {
 		boolean running = true;
 		while(running) {
 			menuView();
@@ -603,12 +655,5 @@ public class LibraryView {
 			}
 		}
 	}
-	
-	public static void main(String[] args) {
-//        LibraryModel libraryModel = new LibraryModel();
-//        LibraryView view = new LibraryView(libraryModel);
-//        view.run();   
-    }
-	
 }
  

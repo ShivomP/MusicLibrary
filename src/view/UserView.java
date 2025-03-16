@@ -1,6 +1,11 @@
 package view;
 
 import model.Users;
+
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.FileReader;
+import java.io.InputStream;
 import java.util.Scanner;
 
 public class UserView {
@@ -34,7 +39,10 @@ public class UserView {
                     createAccount();
                     break;
                 case "2":
-                    login();
+                    boolean result = login();
+                    if (result) {
+                    	loadUserData();
+                    }
                     break;
                 case "3":
                     System.out.println("Exiting.....");
@@ -78,6 +86,25 @@ public class UserView {
         }
     }
     
+	private void loadUserData() {
+	  try (BufferedReader reader = new BufferedReader(new FileReader("src/model/" + loggedInUser + ".txt"))) {
+	      String line;
+	      String result = "";
+	      while ((line = reader.readLine()) != null) {
+	    	  result = result + line + "\n";
+	      }
+	      System.out.println(result);
+	      InputStream originalIn = System.in;
+	      ByteArrayInputStream inputStream = new ByteArrayInputStream(result.getBytes());
+	      System.setIn(inputStream);
+	      LibraryView view = new LibraryView(loggedInUser);
+	      view.run();
+	      System.setIn(originalIn);
+	  } catch (Exception e) {
+	      e.printStackTrace();
+	  }
+	}
+	    
     public String getLoggedInUser() {
         return loggedInUser;
     }

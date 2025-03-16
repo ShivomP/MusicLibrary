@@ -6,8 +6,6 @@ import java.io.InputStream;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
-import model.*;
-
 class TestLibraryView {
     InputStream originalIn = System.in;
     String command;
@@ -25,7 +23,6 @@ class TestLibraryView {
     			+ "22\n";
     	inputStream = new ByteArrayInputStream(command.getBytes());
     	System.setIn(inputStream);
-    	LibraryView.main(null);
     }
     
     @Test
@@ -35,7 +32,6 @@ class TestLibraryView {
     			+ "22\n";
     	inputStream = new ByteArrayInputStream(command.getBytes());
     	System.setIn(inputStream);
-    	LibraryView.main(null);
     }
     
     @Test
@@ -45,7 +41,6 @@ class TestLibraryView {
     			+ "22\n";
     	inputStream = new ByteArrayInputStream(command.getBytes());
     	System.setIn(inputStream);
-    	LibraryView.main(null);
     }
     
     @Test
@@ -55,7 +50,6 @@ class TestLibraryView {
     			+ "22\n";
     	inputStream = new ByteArrayInputStream(command.getBytes());
     	System.setIn(inputStream);
-    	LibraryView.main(null);
     }
     
     @Test
@@ -70,7 +64,6 @@ class TestLibraryView {
     			+ "22\n";
     	inputStream = new ByteArrayInputStream(command.getBytes());
     	System.setIn(inputStream);
-    	LibraryView.main(null);
     }
     
     @Test
@@ -92,7 +85,6 @@ class TestLibraryView {
     			+ "22\n";
     	inputStream = new ByteArrayInputStream(command.getBytes());
     	System.setIn(inputStream);
-    	LibraryView.main(null);
     }
     
     
@@ -116,7 +108,6 @@ class TestLibraryView {
     			+ "22\n";
     	inputStream = new ByteArrayInputStream(command.getBytes());
     	System.setIn(inputStream);
-    	LibraryView.main(null);
     }
     
     @Test
@@ -134,6 +125,5 @@ class TestLibraryView {
     			+ "22\n";
     	inputStream = new ByteArrayInputStream(command.getBytes());
     	System.setIn(inputStream);
-    	LibraryView.main(null);
     } 
 } 

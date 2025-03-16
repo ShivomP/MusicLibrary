@@ -25,7 +25,7 @@ public class LibraryModel {
 	private String username;
 	private HashMap<String, ArrayList<Song>> genreFrequency;
 	
-	public LibraryModel(String username) {
+	public LibraryModel() {
 		MusicStore store = new MusicStore();
 		this.allAlbums = store.getAlbumsList();
 		this.allSongs = store.getSongsList();

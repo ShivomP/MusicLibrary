@@ -11,7 +11,7 @@ public class Users {
     private Map<String, String> userCredentials;
 
     public Users() {
-        this.userCredentials = new HashMap<>();
+        this.userCredentials = new HashMap<String, String>();
         loadUsers();
     }
     
