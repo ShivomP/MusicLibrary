@@ -32,7 +32,7 @@ public class UserView {
     		startMenu();
     
             System.out.print("Enter choice: ");
-            String choice = scanner.nextLine();
+            String choice = scanner.nextLine().trim();
             
             switch (choice) {
                 case "1":
@@ -60,9 +60,9 @@ public class UserView {
 
     private void createAccount() {
         System.out.print("Enter new username: ");
-        String username = scanner.nextLine();
+        String username = scanner.nextLine().toLowerCase();
         System.out.print("Enter password: ");
-        String password = scanner.nextLine();
+        String password = scanner.nextLine().toLowerCase();
 
         if (users.createUser(username, password)) {
             System.out.println("Account created successfully. Please log in.");
@@ -73,9 +73,9 @@ public class UserView {
 
     private boolean login() {
         System.out.print("Enter username: ");
-        String username = scanner.nextLine();
+        String username = scanner.nextLine().trim().toLowerCase();
         System.out.print("Enter password: ");
-        String password = scanner.nextLine();
+        String password = scanner.nextLine().trim().toLowerCase();
         
         if (users.authenticateUser(username, password)) {
             System.out.println("Login successful");

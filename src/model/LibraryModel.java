@@ -22,7 +22,6 @@ public class LibraryModel {
 	private Playlist mostFrequent;
 	private Playlist favoriteSongs;
 	private Playlist topRated;
-	private String username;
 	private HashMap<String, ArrayList<Song>> genreFrequency;
 	
 	public LibraryModel() {
@@ -36,7 +35,6 @@ public class LibraryModel {
 		this.mostFrequent = new Playlist("Frequently Played");
 		this.favoriteSongs = new Playlist("Favorite Songs");
 		this.topRated = new Playlist("Top Rated");
-		this.setUsername(username);
 		this.genreFrequency = new HashMap<String, ArrayList<Song>>();
 		this.playlists.add(mostRecent);
 		this.playlists.add(mostFrequent);
@@ -70,7 +68,7 @@ public class LibraryModel {
 	
 	public Album albumByTitle(String albumName) {
 		for (int i = 0; i < allAlbums.size(); i++) {
-			if (allAlbums.get(i).getTitle().toLowerCase().equals(albumName)) {
+			if (allAlbums.get(i).getTitle().toLowerCase().equals(albumName.toLowerCase())) {
 				return new Album(allAlbums.get(i));
 			}
 		}
@@ -143,7 +141,7 @@ public class LibraryModel {
 	public Album myAlbumByTitle(String albumName) {
 		for (int i = 0; i < myAlbums.size(); i++) {
 			if (myAlbums.get(i).getTitle().toLowerCase().equals(albumName)) {
-				return new Album(myAlbums.get(i));
+				return myAlbums.get(i);
 			}
 		}
 		
@@ -448,13 +446,5 @@ public class LibraryModel {
 		List<Song> sorted = new ArrayList<Song>(mySongs);
 		sorted.sort((songOne, songTwo) -> songOne.getRating().compareTo(songTwo.getRating()));
 		return sorted;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
 	}
 }

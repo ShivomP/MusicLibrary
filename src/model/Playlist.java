@@ -70,12 +70,13 @@ public class Playlist {
 	
 	public void updateMostFrequent(ArrayList<Song> sortedFrequency) {
 		int i = 0;
-		while(sortedFrequency.get(i) != null && i < 10) {
-			if (songs.get(i) == null) {
-				songs.add(sortedFrequency.get(i));
-			} else {
-				songs.set(i, sortedFrequency.get(i));
-			}
-		}
+	    while (i < sortedFrequency.size() && i < 10 && sortedFrequency.get(i) != null) {
+	        if (songs.size() <= i) {
+	            songs.add(sortedFrequency.get(i));
+	        } else {
+	            songs.set(i, sortedFrequency.get(i));
+	        }
+	        i++;
+	    }
 	}
 }

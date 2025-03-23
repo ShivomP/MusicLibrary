@@ -57,7 +57,7 @@ public class LibraryView {
 		System.out.println("23. Get list of songs sorted by artist type: '23'");
 		System.out.println("24. Get list of songs sorted by rating type: '24'");
 		System.out.println("25. Remove song from library type: '25'");
-		System.out.println("26. Remove alnum from library type: '26'");
+		System.out.println("26. Remove album from library type: '26'");
 		System.out.println("27. Search for songs by genre type: '27'");
 		System.out.println("28. Shuffle songs in your library type: '28'");
 		System.out.println("29. Shuffle songs in a playlist type: '29'");
@@ -441,7 +441,7 @@ public class LibraryView {
 			System.out.println("No rated songs in your library.");
 		} else {
 			for (Song song : sorted) {
-				System.out.println(song);
+				System.out.println(song + " " + song.getRating());
 			}
 		}
 	}
@@ -617,7 +617,7 @@ public class LibraryView {
 		while(running) {
 			menuView();
 			System.out.println("Enter your choice! ");
-			String input = scanner.nextLine();				
+			String input = scanner.nextLine().trim();				
 				
 			switch(input.trim()) {
 				case "1":

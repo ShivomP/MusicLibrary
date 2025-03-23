@@ -18,7 +18,7 @@ public class Song {
 		this.title = title;
 		this.artist = artist;
 		this.album = album;
-		this.rating = null;
+		this.rating = Rating.ONE;
 		this.favorite = false;
 		this.genre = genre;
 		this.playCount = 0;

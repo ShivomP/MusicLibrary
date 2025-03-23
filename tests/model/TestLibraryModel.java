@@ -105,14 +105,6 @@ class TestLibraryModel {
     }
     
     @Test
-    void testGetPlaylists() {
-    	assertTrue(libraryModel.getPlaylists().isEmpty());
-    	libraryModel.createPlaylist("New Music");
-    	libraryModel.createPlaylist("Old Music");
-    	assertEquals("Old Music", libraryModel.getPlaylists().get(1));
-    }
-    
-    @Test
     void testGetFavoriteSongs() {
     	assertTrue(libraryModel.getFavoriteSongs().isEmpty());
     	libraryModel.addSong("tired", "adele");

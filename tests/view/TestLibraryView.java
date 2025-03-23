@@ -18,38 +18,48 @@ class TestLibraryView {
 
     @Test
     void testSearchStoreSongByTitle() {
-    	command = "1\n tired\n "
+    	command = "1\n tired\n y\n "
+    			+ "1\n tired\n n\n "
+    			+ "1\n hang loose\n y\n "
     			+ "1\n shivom\n "
-    			+ "22\n";
+    			+ "31\n";
     	inputStream = new ByteArrayInputStream(command.getBytes());
     	System.setIn(inputStream);
+    	LibraryView user = new LibraryView("shivom");
+    	user.run();
     }
     
     @Test
     void testSearchStoreSongByArtist() {
     	command = "2\n adele\n "
     			+ "2\n shivom\n "
-    			+ "22\n";
+    			+ "31\n";
     	inputStream = new ByteArrayInputStream(command.getBytes());
     	System.setIn(inputStream);
+    	LibraryView user = new LibraryView("shivom");
+    	user.run();
     }
     
     @Test
     void testSearchStoreAlbumByTitle() {
     	command = "3\n 19\n "
     			+ "3\n shivom\n "
-    			+ "22\n";
+    			+ "31\n";
     	inputStream = new ByteArrayInputStream(command.getBytes());
     	System.setIn(inputStream);
+    	LibraryView user = new LibraryView("shivom");
+    	user.run();
     }
     
     @Test
     void testSearchStoreAlbumByArtist() {
     	command = "4\n coldplay\n "
     			+ "4\n shivom\n "
-    			+ "22\n";
+    			+ "31\n";
     	inputStream = new ByteArrayInputStream(command.getBytes());
     	System.setIn(inputStream);
+    	LibraryView user = new LibraryView("shivom");
+    	user.run();
     }
     
     @Test
@@ -61,9 +71,11 @@ class TestLibraryView {
     			+ "5\n shivom\n "
     			+ "6\n Norah Jones\n "
     			+ "6\n shiv\n "
-    			+ "22\n";
+    			+ "31\n";
     	inputStream = new ByteArrayInputStream(command.getBytes());
     	System.setIn(inputStream);
+    	LibraryView user = new LibraryView("shivom");
+    	user.run();
     }
     
     @Test
@@ -82,9 +94,11 @@ class TestLibraryView {
     			+ "12\n "
     			+ "13\n "
     			+ "14\n "
-    			+ "22\n";
+    			+ "31\n";
     	inputStream = new ByteArrayInputStream(command.getBytes());
     	System.setIn(inputStream);
+    	LibraryView user = new LibraryView("shivom");
+    	user.run();
     }
     
     
@@ -105,9 +119,11 @@ class TestLibraryView {
     			+ "19\n shiv\n tired\n adele\n "
     			+ "19\n shivom's music\n fake\n fake\n "
     			+ "19\n shivom's music\n tired\n adele\n "
-    			+ "22\n";
+    			+ "31\n";
     	inputStream = new ByteArrayInputStream(command.getBytes());
     	System.setIn(inputStream);
+    	LibraryView user = new LibraryView("shivom");
+    	user.run();
     }
     
     @Test
@@ -122,8 +138,90 @@ class TestLibraryView {
     			+ "21\n skdfj\n adele\n 4\n "
     			+ "21\n cold shoulder\n adele\n 5\n "
     			+ "16\n "
-    			+ "22\n";
+    			+ "31\n";
     	inputStream = new ByteArrayInputStream(command.getBytes());
     	System.setIn(inputStream);
+    	LibraryView user = new LibraryView("shivom");
+    	user.run();
     } 
+    
+    @Test
+    void testSortSongs() {
+    	command = "22\n "
+    			+ "23\n "
+    			+ "24\n "
+    			+ "31\n";
+    	inputStream = new ByteArrayInputStream(command.getBytes());
+    	System.setIn(inputStream);
+    	LibraryView user = new LibraryView("shivom");
+    	user.run();
+    } 
+    
+    @Test
+    void testRemoveSong() {
+    	command = "25\n shivom\n shivom\n "
+    			+ "25\n tired\n adele\n "
+    			+ "10\n tired\n adele\n "
+    			+ "31\n";
+    	inputStream = new ByteArrayInputStream(command.getBytes());
+    	System.setIn(inputStream);
+    	LibraryView user = new LibraryView("shivom");
+    	user.run();
+    }
+    
+    @Test
+    void testRemoveAlbum() {
+    	command = "26\n shivom\n "
+    			+ "26\n 19\n "
+    			+ "11\n 19\n "
+    			+ "31\n";
+    	inputStream = new ByteArrayInputStream(command.getBytes());
+    	System.setIn(inputStream);
+    	LibraryView user = new LibraryView("shivom");
+    	user.run();
+    }
+    
+    @Test
+    void testSearchByGenre() {
+    	command = "27\n shivom\n "
+    			+ "27\n pop\n "
+    			+ "11\n 19\n "
+    			+ "31\n";
+    	inputStream = new ByteArrayInputStream(command.getBytes());
+    	System.setIn(inputStream);
+    	LibraryView user = new LibraryView("shivom");
+    	user.run();
+    }
+    
+    @Test
+    void testShuffleAllSongs() {
+    	command = "28\n "
+    			+ "31\n";
+    	inputStream = new ByteArrayInputStream(command.getBytes());
+    	System.setIn(inputStream);
+    	LibraryView user = new LibraryView("shivom");
+    	user.run();
+    }
+    
+    @Test
+    void testShufflePlaylist() {
+    	command = "29\n watermelon\n "
+    			+ "29\n shivom's music\n "
+    			+ "31\n";
+    	inputStream = new ByteArrayInputStream(command.getBytes());
+    	System.setIn(inputStream);
+    	LibraryView user = new LibraryView("shivom");
+    	user.run();
+    }
+    
+    @Test
+    void testPlaySong() {
+    	command = "30\n shivom\n hello\n "
+    			+ "30\n tired\n adele\n "
+    			+ "31\n";
+    	inputStream = new ByteArrayInputStream(command.getBytes());
+    	System.setIn(inputStream);
+    	LibraryView user = new LibraryView("shivom");
+    	user.run();
+    }
 } 
