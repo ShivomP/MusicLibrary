@@ -601,7 +601,11 @@ public class LibraryView {
 	                    String album = reader.readLine();
 	                    libraryModel.removeAlbum(album);
 	                    break;
-	                case "30": 
+	                case "30":
+	                	String songPlayed = reader.readLine();
+	                	String artistPlayed = reader.readLine();
+	                	libraryModel.playSong(songPlayed, artistPlayed);
+	                case "31": 
 	                    break;
 	                default:
 	                	System.out.println("Invalid input try again!");

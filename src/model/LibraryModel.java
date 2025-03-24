@@ -320,6 +320,7 @@ public class LibraryModel {
 		if (song != null) {
 			song.favoriteSong();
 			favoriteSongs.addSong(song);
+			topRated.addSong(song);
 			return true;
 		}
 		
