@@ -2,6 +2,9 @@ package model;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 class TestPlaylist {
@@ -42,5 +45,33 @@ class TestPlaylist {
     void testPrintPlaylist() {
     	playlist.addSong(song);
         playlist.printPlaylist();
+    }
+    
+    @Test
+    void testInsertSongBeginning() {
+    	playlist.insertSongBeginning(song);
+    	assertEquals(song, playlist.getSongs().get(0));
+    }
+    
+    @Test
+    void testRemoveLast() {
+    	playlist.addSong(song);
+    	playlist.removeLastSong();
+    	assertEquals(0, playlist.getSongs().size());
+    }
+    
+    @Test
+    void testUpdateMostFrequent() {
+    	ArrayList<Song> stuff = new ArrayList<Song>();
+    	for (int i = 0; i < 20; i++) {
+    		String str = Integer.toString(i);
+    		Song cur = new Song(str, str, str, str);
+    		for (int j = 0; j < i; j++) {
+    			cur.increasePlayCount();
+    		}
+    		stuff.add(cur);
+    	}
+    	
+    	playlist.updateMostFrequent(stuff);
     }
 }
